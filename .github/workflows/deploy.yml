@@ -1,62 +1,26 @@
 # CI/CD for Static file
 
-name: Deploy to Cloudflare
+name: Deploy Static Site to Cloudflare Pages
 
 on:
   push:
     branches:
-      - main
-      - dev
+      - main # This triggers the deployment whenever you push to the 'main' branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    name: Build and Deploy
-    
+    name: Deploy to Cloudflare Pages
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build project
-        run: npm run build
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=fronthyre --branch=${{ github.ref_name }}
-
-# name: Deploy Static Site to Cloudflare Pages
-
-# on:
-#   push:
-#     branches:
-#       - main # This triggers the deployment whenever you push to the 'main' branch
-
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
-#     name: Deploy to Cloudflare Pages
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v4
-
-#       - name: Deploy to Cloudflare Pages
-#         uses: cloudflare/wrangler-action@v4
-#         with:
-#           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-#           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-#           command: pages deploy . --project-name=fronthyre
+          command: pages deploy . --project-name=fronthyre
 
 # CI/CD for react and next app
 
