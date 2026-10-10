@@ -25,7 +25,7 @@ function App() {
           <Route path="/cookie-policy" element={<CookiePolicyPage />} />
           <Route path="/privacy-requests" element={<PrivacyRequestsPage />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="*" element={<BuildathonPage />} />
+          <Route path="*" element={<BuildathonPage />} /> 
         </Routes>
       </Layout>
     </BrowserRouter>
