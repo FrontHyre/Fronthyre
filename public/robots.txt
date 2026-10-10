@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /early-access
+
+Sitemap: https://fronthyre.com/sitemap.xml
