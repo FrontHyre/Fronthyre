@@ -8,7 +8,7 @@ import PrivacyPage from '@/pages/PrivacyPage';
 import TermsPage from '@/pages/TermsPage';
 import CookiePolicyPage from '@/pages/CookiePolicyPage';
 import PrivacyRequestsPage from '@/pages/PrivacyRequestsPage';
-import ContactPage from '@/pages/ContactPage';
+import ContactPage from '@/pages/ContactPage'; 
 
 function App() {
   return (
