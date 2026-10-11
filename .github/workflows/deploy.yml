@@ -1,12 +1,16 @@
-name: Deploy App to Cloudflare Workers
+# Production deploys are handled by Cloudflare Workers Builds
+# (Git integration on the Worker). Do not also deploy from GitHub —
+# the Pages/Workers API token + account ID here returned 7003.
+name: CI
 
 on:
   push:
     branches:
       - main
+  pull_request:
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -21,12 +25,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build project
-        run: npm run build
+      - name: Typecheck
+        run: npm run typecheck
 
-      - name: Deploy to Cloudflare Workers
-        uses: cloudflare/wrangler-action@v4
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy
+      - name: Build
+        run: npm run build
