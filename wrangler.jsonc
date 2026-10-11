@@ -1,11 +1,26 @@
 {
+  "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "fronthyre",
   "compatibility_date": "2026-03-06",
-  "build": {
-    "command": "npm run build"
-  },
   "assets": {
     "directory": "./dist",
     "not_found_handling": "single-page-application"
+  },
+  "routes": [
+    {
+      "pattern": "fronthyre.com",
+      "custom_domain": true
+    }
+  ],
+  "env": {
+    "dev": {
+      "name": "fronthyre-dev",
+      "routes": [
+        {
+          "pattern": "dev.fronthyre.com",
+          "custom_domain": true
+        }
+      ]
+    }
   }
 }
