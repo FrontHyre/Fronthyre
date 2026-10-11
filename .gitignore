@@ -21,6 +21,10 @@ build/
 # Vite
 .vite/
 
+# Cloudflare
+.wrangler
+.dev.vars*
+
 # Env
 .env
 .env.*
