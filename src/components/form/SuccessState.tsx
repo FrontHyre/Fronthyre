@@ -1,7 +1,11 @@
 import { ArrowRight } from 'lucide-react';
 import Button from '@/components/ui/Button';
 
-export default function SuccessState() {
+interface SuccessStateProps {
+  publicId?: string;
+}
+
+export default function SuccessState({ publicId }: SuccessStateProps) {
   return (
     <div className="max-w-lg mx-auto text-center py-12">
       <div className="flex justify-center mb-8">
@@ -41,6 +45,12 @@ export default function SuccessState() {
       </p>
       <p className="mt-3 text-sm text-fr-muted animate-fade-in-delay-2">
         Fronthyre is currently in pre-launch.
+        {publicId ? (
+          <>
+            {' '}
+            Reference: <span className="font-mono text-fr-secondary">{publicId}</span>
+          </>
+        ) : null}
       </p>
 
       <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-delay-3">

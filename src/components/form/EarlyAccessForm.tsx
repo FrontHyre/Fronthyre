@@ -1,11 +1,18 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Loader2, ArrowRight } from 'lucide-react';
 import FormField from './FormField';
 import ResumeUploader from './ResumeUploader';
 import SuccessState from './SuccessState';
 import Button from '@/components/ui/Button';
+import {
+  fetchEarlyAccessFormOptions,
+  submitEarlyAccess,
+  type FormOption,
+} from '@/lib/api';
+import { errorsByField, isApiErrorBody } from '@/lib/apiError';
+import { appendIfPresent, appendUrl } from '@/lib/earlyAccessFormData';
 
-interface FormData {
+interface EarlyAccessFields {
   fullName: string;
   email: string;
   mobile: string;
@@ -28,9 +35,40 @@ interface FormData {
   talentMatchingConsent: boolean;
 }
 
-type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
+type FormStatus = 'idle' | 'submitting' | 'success';
 
-const initialData: FormData = {
+const FIELD_API: Partial<Record<keyof EarlyAccessFields, string>> = {
+  fullName: 'full_name',
+  email: 'email',
+  mobile: 'mobile_number',
+  currentRole: 'current_role',
+  yearsExperience: 'years_of_experience',
+  experienceLevel: 'experience_level',
+  primarySkills: 'primary_skills',
+  secondarySkills: 'secondary_skills',
+  preferredLocation: 'pref_location',
+  workPreference: 'work_preference',
+  jobSearchStatus: 'job_search_status',
+  noticePeriod: 'notice_period',
+  linkedin: 'linkedin_url',
+  github: 'github_url',
+  portfolio: 'portfolio_url',
+  otherLink: 'other_relevant_url',
+  ageConfirm: 'consent_age_18_or_older',
+  privacyConsent: 'consent_privacy_and_data_processing',
+  marketingConsent: 'consent_marketing_communications',
+  talentMatchingConsent: 'consent_job_matching',
+};
+
+function inlineFieldErrors(map: Record<string, string>): Record<string, string> {
+  const inline: Record<string, string> = {};
+  for (const [key, message] of Object.entries(map)) {
+    if (key !== '_form' && key !== '_auth') inline[key] = message;
+  }
+  return inline;
+}
+
+const initialData: EarlyAccessFields = {
   fullName: '',
   email: '',
   mobile: '',
@@ -53,34 +91,12 @@ const initialData: FormData = {
   talentMatchingConsent: false,
 };
 
-const experienceLevels = [
-  { value: 'entry', label: 'Entry (0-1 years)' },
-  { value: 'junior', label: 'Junior (1-3 years)' },
-  { value: 'mid', label: 'Mid (3-5 years)' },
-  { value: 'senior', label: 'Senior (5-8 years)' },
-  { value: 'lead', label: 'Lead / Staff (8+ years)' },
-];
-
-const workPreferences = [
-  { value: 'remote', label: 'Remote' },
-  { value: 'hybrid', label: 'Hybrid' },
-  { value: 'onsite', label: 'On-site' },
-  { value: 'open', label: 'Open to all' },
-];
-
-const jobSearchStatuses = [
-  { value: 'actively', label: 'Actively looking' },
-  { value: 'passively', label: 'Passively exploring' },
-  { value: 'not-looking', label: 'Not looking right now' },
-];
-
-const noticePeriods = [
-  { value: 'immediate', label: 'Immediately available' },
-  { value: '15', label: '15 days' },
-  { value: '30', label: '30 days' },
-  { value: '60', label: '60 days' },
-  { value: '90', label: '90 days' },
-];
+const emptyOptions = {
+  experience_level: [] as FormOption[],
+  work_preference: [] as FormOption[],
+  job_search_status: [] as FormOption[],
+  notice_period: [] as FormOption[],
+};
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -136,63 +152,182 @@ function ConsentCheckbox({ checked, onChange, label, text, required, error }: Ch
 }
 
 export default function EarlyAccessForm() {
-  const [data, setData] = useState<FormData>(initialData);
-  const [, setResume] = useState<File | null>(null);
+  const [data, setData] = useState<EarlyAccessFields>(initialData);
+  const [resume, setResume] = useState<File | null>(null);
+  const [options, setOptions] = useState(emptyOptions);
+  const [optionsLoading, setOptionsLoading] = useState(true);
+  const [optionsError, setOptionsError] = useState<string | null>(null);
   const [status, setStatus] = useState<FormStatus>('idle');
-  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+  const [formError, setFormError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [publicId, setPublicId] = useState<string | undefined>();
 
-  const update = useCallback((key: keyof FormData, value: string) => {
-    setData((prev) => ({ ...prev, [key]: value }));
-    if (errors[key]) {
-      setErrors((prev) => ({ ...prev, [key]: undefined }));
-    }
-  }, [errors]);
+  const clearApiFieldError = useCallback((apiField: string) => {
+    setFieldErrors((prev) => {
+      if (!prev[apiField]) return prev;
+      const next = { ...prev };
+      delete next[apiField];
+      return next;
+    });
+  }, []);
 
-  const toggleCheckbox = useCallback((key: keyof FormData) => {
-    setData((prev) => ({ ...prev, [key]: !prev[key] }));
-    if (errors[key]) {
-      setErrors((prev) => ({ ...prev, [key]: undefined }));
-    }
-  }, [errors]);
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setOptionsLoading(true);
+      setOptionsError(null);
+      try {
+        const fetched = await fetchEarlyAccessFormOptions();
+        if (!cancelled) setOptions(fetched);
+      } catch (err) {
+        if (!cancelled) {
+          setOptionsError(
+            isApiErrorBody(err) ? err.error : 'Could not load form options.',
+          );
+        }
+      } finally {
+        if (!cancelled) setOptionsLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const update = useCallback(
+    (key: keyof EarlyAccessFields, value: string) => {
+      setData((prev) => ({ ...prev, [key]: value }));
+      const apiField = FIELD_API[key];
+      if (apiField) clearApiFieldError(apiField);
+    },
+    [clearApiFieldError],
+  );
+
+  const toggleCheckbox = useCallback(
+    (key: keyof EarlyAccessFields) => {
+      setData((prev) => ({ ...prev, [key]: !prev[key] }));
+      const apiField = FIELD_API[key];
+      if (apiField) clearApiFieldError(apiField);
+    },
+    [clearApiFieldError],
+  );
+
+  const handleResumeChange = useCallback(
+    (file: File | null) => {
+      setResume(file);
+      clearApiFieldError('resume');
+    },
+    [clearApiFieldError],
+  );
 
   const validate = (): boolean => {
-    const newErrors: Partial<Record<keyof FormData, string>> = {};
+    const next: Record<string, string> = {};
 
     if (!data.fullName.trim()) {
-      newErrors.fullName = 'Please enter your full name.';
+      next.full_name = 'Please enter your full name.';
     }
     if (!data.email.trim()) {
-      newErrors.email = 'Please enter your email.';
+      next.email = 'Please enter your email.';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
-      newErrors.email = 'Please enter a valid email address.';
+      next.email = 'Please enter a valid email address.';
     }
     if (!data.ageConfirm) {
-      newErrors.ageConfirm = 'Please confirm you are 18 years of age or older.';
+      next.consent_age_18_or_older = 'Please confirm you are 18 years of age or older.';
     }
     if (!data.privacyConsent) {
-      newErrors.privacyConsent = 'Please read the Privacy Notice and provide consent to continue.';
+      next.consent_privacy_and_data_processing =
+        'Please read the Privacy Notice and provide consent to continue.';
     }
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    setFieldErrors(next);
+    if (Object.keys(next).length > 0) {
+      setFormError('Please correct the errors below.');
+      return false;
+    }
+    return true;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError(null);
+    setFieldErrors({});
+
     if (!validate()) return;
 
+    const fd = new FormData();
+    fd.append('full_name', data.fullName.trim());
+    fd.append('email', data.email.trim());
+    fd.append('consent_age_18_or_older', 'true');
+    fd.append('consent_privacy_and_data_processing', 'true');
+
+    appendIfPresent(fd, 'mobile_number', data.mobile);
+    appendIfPresent(fd, 'current_role', data.currentRole);
+    if (data.yearsExperience.trim()) {
+      appendIfPresent(fd, 'years_of_experience', data.yearsExperience.trim());
+    }
+    appendIfPresent(fd, 'experience_level', data.experienceLevel);
+    appendIfPresent(fd, 'primary_skills', data.primarySkills);
+    appendIfPresent(fd, 'secondary_skills', data.secondarySkills);
+    appendIfPresent(fd, 'pref_location', data.preferredLocation);
+    appendIfPresent(fd, 'work_preference', data.workPreference);
+    appendIfPresent(fd, 'job_search_status', data.jobSearchStatus);
+    appendIfPresent(fd, 'notice_period', data.noticePeriod);
+
+    const setUrlFieldError = (key: string, message: string) => {
+      setFieldErrors((prev) => ({ ...prev, [key]: message }));
+    };
+    const urlOk =
+      appendUrl(fd, 'linkedin_url', data.linkedin, setUrlFieldError) &&
+      appendUrl(fd, 'github_url', data.github, setUrlFieldError) &&
+      appendUrl(fd, 'portfolio_url', data.portfolio, setUrlFieldError) &&
+      appendUrl(fd, 'other_relevant_url', data.otherLink, setUrlFieldError);
+
+    if (!urlOk) {
+      setFormError('Please correct the errors below.');
+      return;
+    }
+
+    fd.append('consent_marketing_communications', data.marketingConsent ? 'true' : 'false');
+    fd.append('consent_job_matching', data.talentMatchingConsent ? 'true' : 'false');
+    if (resume) {
+      fd.append('resume', resume);
+    }
+
     setStatus('submitting');
-    setTimeout(() => {
+
+    try {
+      const result = await submitEarlyAccess(fd);
+      setFieldErrors({});
+      setFormError(null);
+      setPublicId(result.public_id);
       setStatus('success');
-    }, 1800);
+    } catch (err) {
+      if (isApiErrorBody(err)) {
+        setFormError(err.error);
+        setFieldErrors(inlineFieldErrors(errorsByField(err.errors ?? [])));
+      } else {
+        setFormError('Something went wrong. Please try again.');
+      }
+      setStatus('idle');
+    }
   };
 
   if (status === 'success') {
-    return <SuccessState />;
+    return <SuccessState publicId={publicId} />;
   }
 
   return (
     <form onSubmit={handleSubmit} className="max-w-2xl mx-auto" noValidate>
+      {optionsError && (
+        <div className="mb-6 p-4 rounded-xl border border-fr-error/30 bg-fr-error/5 text-sm text-fr-error" role="alert">
+          {optionsError}
+        </div>
+      )}
+      {formError && (
+        <div className="mb-6 p-4 rounded-xl border border-fr-error/30 bg-fr-error/5 text-sm text-fr-error" role="alert">
+          {formError}
+        </div>
+      )}
       {/* Basic Information */}
       <div className="card-fr p-6 sm:p-8 mb-6">
         <SectionLabel>Basic Information</SectionLabel>
@@ -204,7 +339,7 @@ export default function EarlyAccessForm() {
             value={data.fullName}
             onChange={(v) => update('fullName', v)}
             placeholder="Your full name"
-            error={errors.fullName}
+            error={fieldErrors.full_name}
             autoComplete="name"
           />
           <FormField
@@ -215,7 +350,7 @@ export default function EarlyAccessForm() {
             value={data.email}
             onChange={(v) => update('email', v)}
             placeholder="you@example.com"
-            error={errors.email}
+            error={fieldErrors.email}
             autoComplete="email"
             inputMode="email"
           />
@@ -228,6 +363,7 @@ export default function EarlyAccessForm() {
             placeholder="+91 98765 43210"
             autoComplete="tel"
             inputMode="tel"
+            error={fieldErrors.mobile_number}
           />
         </div>
       </div>
@@ -243,6 +379,7 @@ export default function EarlyAccessForm() {
               value={data.currentRole}
               onChange={(v) => update('currentRole', v)}
               placeholder="e.g. Frontend Engineer"
+              error={fieldErrors.current_role}
             />
             <FormField
               label="Years of Experience"
@@ -251,6 +388,7 @@ export default function EarlyAccessForm() {
               onChange={(v) => update('yearsExperience', v)}
               placeholder="e.g. 3"
               inputMode="numeric"
+              error={fieldErrors.years_of_experience}
             />
           </div>
           <FormField
@@ -259,8 +397,9 @@ export default function EarlyAccessForm() {
             type="select"
             value={data.experienceLevel}
             onChange={(v) => update('experienceLevel', v)}
-            options={experienceLevels}
-            placeholder="Select experience level"
+            options={options.experience_level}
+            placeholder={optionsLoading ? 'Loading...' : 'Select experience level'}
+            error={fieldErrors.experience_level}
           />
         </div>
       </div>
@@ -276,6 +415,7 @@ export default function EarlyAccessForm() {
             onChange={(v) => update('primarySkills', v)}
             placeholder="e.g. React, TypeScript, CSS"
             hint="Comma-separated list of your strongest skills."
+            error={fieldErrors.primary_skills}
           />
           <FormField
             label="Secondary Skills"
@@ -284,6 +424,7 @@ export default function EarlyAccessForm() {
             onChange={(v) => update('secondarySkills', v)}
             placeholder="e.g. Node.js, GraphQL, Testing"
             hint="Additional skills you're comfortable with."
+            error={fieldErrors.secondary_skills}
           />
         </div>
       </div>
@@ -298,6 +439,7 @@ export default function EarlyAccessForm() {
             value={data.preferredLocation}
             onChange={(v) => update('preferredLocation', v)}
             placeholder="e.g. Bangalore, Mumbai, Remote"
+            error={fieldErrors.pref_location}
           />
           <div className="grid sm:grid-cols-2 gap-5">
             <FormField
@@ -306,8 +448,9 @@ export default function EarlyAccessForm() {
               type="select"
               value={data.workPreference}
               onChange={(v) => update('workPreference', v)}
-              options={workPreferences}
-              placeholder="Select preference"
+              options={options.work_preference}
+              placeholder={optionsLoading ? 'Loading...' : 'Select preference'}
+              error={fieldErrors.work_preference}
             />
             <FormField
               label="Job Search Status"
@@ -315,8 +458,9 @@ export default function EarlyAccessForm() {
               type="select"
               value={data.jobSearchStatus}
               onChange={(v) => update('jobSearchStatus', v)}
-              options={jobSearchStatuses}
-              placeholder="Select status"
+              options={options.job_search_status}
+              placeholder={optionsLoading ? 'Loading...' : 'Select status'}
+              error={fieldErrors.job_search_status}
             />
           </div>
           <FormField
@@ -325,8 +469,9 @@ export default function EarlyAccessForm() {
             type="select"
             value={data.noticePeriod}
             onChange={(v) => update('noticePeriod', v)}
-            options={noticePeriods}
-            placeholder="Select notice period"
+            options={options.notice_period}
+            placeholder={optionsLoading ? 'Loading...' : 'Select notice period'}
+            error={fieldErrors.notice_period}
           />
         </div>
       </div>
@@ -341,6 +486,7 @@ export default function EarlyAccessForm() {
             value={data.linkedin}
             onChange={(v) => update('linkedin', v)}
             placeholder="https://linkedin.com/in/username"
+            error={fieldErrors.linkedin_url}
           />
           <FormField
             label="GitHub"
@@ -348,6 +494,7 @@ export default function EarlyAccessForm() {
             value={data.github}
             onChange={(v) => update('github', v)}
             placeholder="https://github.com/username"
+            error={fieldErrors.github_url}
           />
           <FormField
             label="Portfolio"
@@ -355,6 +502,7 @@ export default function EarlyAccessForm() {
             value={data.portfolio}
             onChange={(v) => update('portfolio', v)}
             placeholder="https://yourportfolio.com"
+            error={fieldErrors.portfolio_url}
           />
           <FormField
             label="Other relevant link"
@@ -362,6 +510,7 @@ export default function EarlyAccessForm() {
             value={data.otherLink}
             onChange={(v) => update('otherLink', v)}
             placeholder="https://..."
+            error={fieldErrors.other_relevant_url}
           />
         </div>
       </div>
@@ -369,7 +518,7 @@ export default function EarlyAccessForm() {
       {/* Resume */}
       <div className="card-fr p-6 sm:p-8 mb-6">
         <SectionLabel>Resume</SectionLabel>
-        <ResumeUploader onFileChange={setResume} />
+        <ResumeUploader onFileChange={handleResumeChange} error={fieldErrors.resume} />
       </div>
 
       {/* Your Information — Privacy/data-use text */}
@@ -390,7 +539,7 @@ export default function EarlyAccessForm() {
             label="Required"
             text="I confirm that I am 18 years of age or older."
             required
-            error={errors.ageConfirm}
+            error={fieldErrors.consent_age_18_or_older}
           />
           <ConsentCheckbox
             checked={data.privacyConsent}
@@ -398,7 +547,7 @@ export default function EarlyAccessForm() {
             label="Required"
             text="I have read the Privacy Notice and consent to Fronthyre processing the personal data I submit for Early Access registration and service updates."
             required
-            error={errors.privacyConsent}
+            error={fieldErrors.consent_privacy_and_data_processing}
           />
           <ConsentCheckbox
             checked={data.marketingConsent}
@@ -406,6 +555,7 @@ export default function EarlyAccessForm() {
             label="Optional"
             text="I would also like to receive news, offers and event information from Fronthyre by [e-mail / WhatsApp / SMS]. I can unsubscribe at any time."
             required={false}
+            error={fieldErrors.consent_marketing_communications}
           />
           <ConsentCheckbox
             checked={data.talentMatchingConsent}
@@ -413,6 +563,7 @@ export default function EarlyAccessForm() {
             label="Optional"
             text="I consent to Fronthyre using my profile to assess and match me with relevant job opportunities when its platform launches. Fronthyre will ask separately before sharing my details with any employer."
             required={false}
+            error={fieldErrors.consent_job_matching}
           />
         </div>
       </div>
@@ -423,7 +574,7 @@ export default function EarlyAccessForm() {
           type="submit"
           size="lg"
           fullWidth
-          disabled={status === 'submitting'}
+          disabled={status === 'submitting' || optionsLoading}
           rightIcon={status === 'submitting' ? <Loader2 size={18} className="animate-spin" /> : <ArrowRight size={18} />}
         >
           {status === 'submitting' ? 'Submitting...' : 'Submit Early Access'}
