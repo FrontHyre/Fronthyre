@@ -1,0 +1,11 @@
+// Supabase is paused for now. Uncomment when the backend is wired up.
+//
+// import { createClient } from '@supabase/supabase-js';
+//
+// const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+// const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+//
+// export const supabase =
+//   supabaseUrl && supabaseAnonKey
+//     ? createClient(supabaseUrl, supabaseAnonKey)
+//     : null;
