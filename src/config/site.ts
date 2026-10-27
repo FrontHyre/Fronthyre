@@ -1,7 +1,7 @@
 export const SITE_CONFIG = {
   name: 'Fronthyre',
   product: 'Fronthyre Talent Network',
-  tagline: 'Frontend talent. Better opportunities.',
+  tagline: 'Frontend talent Better opportunities',
   positioning:
     'Fronthyre is building a frontend-focused talent network for developers and UI professionals working across modern web and mobile technologies.',
   heroHeadline: 'Frontend talent.\nBetter opportunities.',

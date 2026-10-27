@@ -42,8 +42,8 @@ export default function Header() {
       }`}
     >
       <nav className="max-w-[1200px] mx-auto px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          <Logo variant="header" showStatus={false} showTagline={false} className="mr-2 max-w-[58%] sm:max-w-none md:mr-0" />
+        <div className="flex min-h-16 items-center justify-between py-2 md:py-0">
+          <Logo variant="header" showStatus={false} showTagline className="mr-2 max-w-[min(100%,320px)] sm:max-w-none md:mr-0" />
 
           <div className="hidden md:flex items-center gap-1">
             {SITE_CONFIG.nav.map((item) => {

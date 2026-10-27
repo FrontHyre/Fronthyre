@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="max-w-[1200px] mx-auto px-6 lg:px-8 py-12 sm:py-16">
         <div className="flex flex-col gap-10 lg:flex-row lg:justify-between">
           <div className="max-w-sm">
-            <Logo variant="footer" showStatus={false} showTagline={false} />
+            <Logo variant="footer" size="default" showStatus={false} showTagline />
             <SocialIcons className="mt-5" />
           </div>
 
