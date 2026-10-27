@@ -9,12 +9,9 @@ export default function Footer() {
       <div className="max-w-[1200px] mx-auto px-6 lg:px-8 py-12 sm:py-16">
         <div className="flex flex-col gap-10 lg:flex-row lg:justify-between">
           <div className="max-w-sm">
-            <Logo showStatus={true} />
+            <Logo variant="footer" showStatus={false} />
             <p className="mt-3 text-sm text-fr-secondary leading-relaxed">
               {SITE_CONFIG.tagline}
-            </p>
-            <p className="mt-2 text-xs text-fr-muted">
-              {SITE_CONFIG.status}
             </p>
             <SocialIcons className="mt-5" />
           </div>
@@ -66,12 +63,9 @@ export default function Footer() {
           </p>
         </div>
 
-        <div className="mt-6 pt-6 border-t border-fr-border space-y-2">
+        <div className="mt-6 pt-6 border-t border-fr-border">
           <p className="text-xs text-fr-muted leading-relaxed">
-            &copy; 2026 [Legal Name of Entity], [CIN/LLPIN], registered office: [address]. Fronthyre is a pre-launch service.
-          </p>
-          <p className="text-xs text-fr-muted">
-            All rights reserved.
+            &copy; 2026 Fronthyre is a pre-launch service.
           </p>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import LinkifiedText from '@/components/ui/LinkifiedText';
 
 interface FAQItem {
   q: string;
@@ -48,7 +49,7 @@ export default function FAQ({ items, title = 'FAQ' }: FAQProps) {
                 }`}
               >
                 <p className="px-5 pb-5 text-sm text-fr-secondary leading-relaxed">
-                  {item.a}
+                  <LinkifiedText text={item.a} />
                 </p>
               </div>
             </div>

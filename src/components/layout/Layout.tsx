@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import CookieBanner from '@/components/ui/CookieBanner';
+import BackToTop from '@/components/layout/BackToTop';
 
 interface LayoutProps {
   children: ReactNode;
@@ -14,6 +15,7 @@ export default function Layout({ children }: LayoutProps) {
       <main className="flex-1 pt-16">{children}</main>
       <Footer />
       <CookieBanner />
+      <BackToTop />
     </div>
   );
 }

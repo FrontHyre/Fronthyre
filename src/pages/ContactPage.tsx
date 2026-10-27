@@ -4,7 +4,10 @@ import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
 import LegalDisclosure from '@/components/ui/LegalDisclosure';
 import { SocialIcons } from '@/components/ui/SocialIcons';
+import { EVENT_CONFIG } from '@/config/event';
 import { SITE_CONFIG } from '@/config/site';
+import LinkifiedText from '@/components/ui/LinkifiedText';
+import { mdLink } from '@/utils/mdLink';
 
 const c = SITE_CONFIG.contacts;
 
@@ -61,22 +64,37 @@ export default function ContactPage() {
           </div>
 
           {/* Contact types */}
-          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto">
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 max-w-6xl mx-auto items-stretch">
             {contactTypes.map((type, i) => {
               const Icon = type.icon;
               return (
-                <Card key={i} hover={false} padding="lg" className={type.isBuildathon ? 'border-cyan-500/20' : ''}>
-                  <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-cyan-500/10 border border-cyan-500/20 mb-5">
+                <Card
+                  key={i}
+                  hover={false}
+                  padding="lg"
+                  className={`flex h-full min-h-0 flex-col ${type.isBuildathon ? 'border-cyan-500/20' : ''}`}
+                >
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-cyan-500/20 bg-cyan-500/10">
                     <Icon size={20} className="text-fr-accent" />
                   </div>
-                  <h2 className="text-base font-semibold text-fr-text mb-2">{type.title}</h2>
-                  <p className="text-sm text-fr-secondary leading-relaxed mb-4">{type.description}</p>
-                  <p className="text-xs font-mono text-fr-muted break-words">{type.contact}</p>
-                  {type.isBuildathon && (
-                    <p className="mt-3 text-xs text-fr-accent font-medium">
-                      Fronthyre is a promotional partner and does not operate the event.
-                    </p>
-                  )}
+                  <h2 className="mt-5 text-base font-semibold leading-snug text-fr-text">
+                    {type.title}
+                  </h2>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-fr-secondary">
+                    {type.description}
+                  </p>
+                  <div className="mt-5 shrink-0 space-y-3 border-t border-fr-border/60 pt-5">
+                    <LinkifiedText
+                      text={mdLink('Connect with us', type.contact)}
+                      as="p"
+                      className="text-sm"
+                    />
+                    {type.isBuildathon && (
+                      <p className="text-xs font-medium leading-relaxed text-fr-accent">
+                        Fronthyre is a promotional partner and does not operate the event.
+                      </p>
+                    )}
+                  </div>
                 </Card>
               );
             })}
@@ -85,7 +103,7 @@ export default function ContactPage() {
           {/* Buildathon contact disclosure */}
           <div className="mt-8 max-w-2xl mx-auto">
             <LegalDisclosure variant="info" title="Buildathon enquiries">
-              Questions about the Buildathon, eligibility, prizes or judging should be sent to NitroStack. Registration is handled by NitroStack at https://nitrostack.ai/community/6ab511189b83148a43a729f0. Fronthyre is a promotional partner and does not operate the event.
+              {`Questions about the Buildathon, eligibility, prizes or judging should be sent to NitroStack — ${mdLink('Connect with us', SITE_CONFIG.contacts.buildathon)}. Registration is handled by NitroStack on ${mdLink('Community', EVENT_CONFIG.registrationUrl)}. Fronthyre is a promotional partner and does not operate the event.`}
             </LegalDisclosure>
           </div>
 
@@ -118,7 +136,7 @@ export default function ContactPage() {
             <div className="flex justify-center">
               <SocialIcons />
             </div>
-            <p className="mt-3 text-xs text-fr-muted">Social links will be activated once accounts are created.</p>
+            <p className="mt-3 text-xs text-fr-muted">Social links will be activated — Stay Tuned with us!</p>
           </div>
         </div>
       </section>

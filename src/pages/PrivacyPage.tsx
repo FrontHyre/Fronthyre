@@ -122,7 +122,7 @@ export default function PrivacyPage() {
             <p className="text-xs font-mono font-semibold uppercase tracking-widest text-fr-muted mb-5">Effective date: [date]</p>
             <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-fr-text">Privacy Policy</h1>
             <p className="mt-4 text-base sm:text-lg text-fr-secondary leading-relaxed">
-              Fronthyre ([Legal Entity Name], address) is the &lsquo;Data Fiduciary&rsquo; for personal data collected through this website. This notice is issued under the Digital Personal Data Protection Act, 2023 (DPDP Act), the DPDP Rules, 2025 and, until they apply, the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011. It is available in English; on request we will provide it in any language in the Eighth Schedule to the Constitution.
+              Fronthyre ([Fronthyre Inc], address) is the &lsquo;Data Fiduciary&rsquo; for personal data collected through this website. This notice is issued under the Digital Personal Data Protection Act, 2023 (DPDP Act), the DPDP Rules, 2025 and, until they apply, the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011. It is available in English; on request we will provide it in any language in the Eighth Schedule to the Constitution.
             </p>
           </div>
         </div>

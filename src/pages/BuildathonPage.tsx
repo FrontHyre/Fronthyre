@@ -24,6 +24,8 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import FAQ from '@/components/ui/FAQ';
 import LegalDisclosure from '@/components/ui/LegalDisclosure';
 import NitroStackLogo from '@/components/brand/NitroStackLogo';
+import { FRONTHYRE_WORDMARK_SRC } from '@/components/brand/Logo';
+import { useLocation } from 'react-router-dom';
 import { EVENT_CONFIG } from '@/config/event';
 
 const eventInfoItems = [
@@ -36,12 +38,15 @@ const eventInfoItems = [
 const whyJoinIcons = [Code2, Trophy, Briefcase, Rocket, Users];
 
 export default function BuildathonPage() {
+  const { pathname } = useLocation();
+  const seoPath = pathname === '/' ? '/' : '/buildathon';
+
   return (
     <>
       <SEO
         title="NitroStack Buildathon — MCP to the Moon | Fronthyre"
         description="A 3-day online solo Buildathon organised by NitroStack, promoted by Fronthyre. October 30 – November 1, 2026. Register on NitroStack."
-        path="/buildathon"
+        path={seoPath}
       />
 
       {/* ===== HERO ===== */}
@@ -75,19 +80,23 @@ export default function BuildathonPage() {
         <div className="relative max-w-[1200px] mx-auto px-6 lg:px-8 py-20 lg:py-28 w-full">
           <div className="text-center max-w-3xl mx-auto">
             {/* Partner lockup */}
-            <div className="inline-flex items-center gap-3 sm:gap-4 px-5 py-3 rounded-full bg-fr-card border border-cyan-500/20 mb-8 animate-fade-in">
+            <div className="inline-flex flex-wrap items-center justify-center gap-x-3 sm:gap-x-4 px-5 py-3 sm:px-6 sm:py-3.5 rounded-full bg-fr-card border border-cyan-500/20 mb-8 animate-fade-in">
               <img
-                src="/assets/brand/Fronthyre_LOGO_FINAL_-_TRANSPARENT_BG.png"
+                src={FRONTHYRE_WORDMARK_SRC}
                 alt="Fronthyre"
-                className="h-6 sm:h-7 w-auto object-contain"
+                className="h-8 w-auto sm:h-9 object-contain object-center"
               />
               <span className="text-sm font-mono font-semibold text-fr-muted">×</span>
-              <img
-                src="/assets/brand/Logo_(2).svg"
-                alt="NitroStack"
-                className="h-7 sm:h-8 w-auto object-contain rounded-lg"
-              />
-              <span className="text-sm sm:text-base font-semibold text-fr-text">NitroStack</span>
+              <div className="flex items-center gap-2">
+                <img
+                  src="/assets/brand/Logo_(2).svg"
+                  alt="NitroStack"
+                  className="h-7 w-7 sm:h-8 sm:w-8 object-contain rounded-lg shrink-0"
+                />
+                <span className="text-sm sm:text-base font-semibold text-fr-text whitespace-nowrap">
+                  NitroStack
+                </span>
+              </div>
             </div>
 
             {/* Main headline */}

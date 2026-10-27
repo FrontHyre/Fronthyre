@@ -43,7 +43,7 @@ export default function Header() {
     >
       <nav className="max-w-[1200px] mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Logo />
+          <Logo variant="header" showStatus={false} className="mr-2 md:mr-0" />
 
           <div className="hidden md:flex items-center gap-1">
             {SITE_CONFIG.nav.map((item) => {

@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { Info, ExternalLink, ShieldCheck, AlertTriangle } from 'lucide-react';
+import LinkifiedText from '@/components/ui/LinkifiedText';
 
 type Variant = 'info' | 'external' | 'privacy' | 'warning';
 
@@ -47,7 +48,9 @@ export default function LegalDisclosure({
       <Icon size={18} className={`${config.iconClass} flex-shrink-0 mt-0.5`} />
       <div className="min-w-0">
         <p className="text-sm font-semibold text-fr-text">{title}</p>
-        <div className="mt-1.5 text-sm text-fr-secondary leading-relaxed">{children}</div>
+        <div className="mt-1.5 text-sm text-fr-secondary leading-relaxed">
+          {typeof children === 'string' ? <LinkifiedText text={children} /> : children}
+        </div>
       </div>
     </div>
   );

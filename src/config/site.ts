@@ -13,8 +13,8 @@ export const SITE_CONFIG = {
   contacts: {
     general: 'support@fronthyre.com',
     privacy: 'support@fronthyre.com',
-    buildathon: 'support@fronthyre.com',
-    legalEntity: '[LEGAL ENTITY NAME — TO BE CONFIRMED]',
+    buildathon: 'contact@nitrostack.ai',
+    legalEntity: 'Fronthyre Inc',
     privacyContact: 'support@fronthyre.com',
     grievanceOfficer: 'support@fronthyre.com',
     jurisdiction: '[GOVERNING LAW / JURISDICTION — TO BE CONFIRMED BY LEGAL COUNSEL]',
@@ -26,9 +26,13 @@ export const SITE_CONFIG = {
       'Fronthyre is currently in pre-launch. This prototype does not store submitted information.',
   },
   social: [
-    { platform: 'X', handle: '@fronthyre', url: '#', icon: 'x' },
-    { platform: 'LinkedIn', handle: 'fronthyre', url: '#', icon: 'linkedin' },
-    { platform: 'GitHub', handle: 'fronthyre', url: '#', icon: 'github' },
+    {
+      platform: 'LinkedIn',
+      handle: 'fronthyre',
+      url: 'https://www.linkedin.com/company/fronthyre/home/',
+      icon: 'linkedin',
+    },
+    // { platform: 'GitHub', handle: 'fronthyre', url: '#', icon: 'github' },
     { platform: 'Instagram', handle: '@fronthyre', url: '#', icon: 'instagram' },
     { platform: 'YouTube', handle: '@fronthyre', url: '#', icon: 'youtube' },
   ],

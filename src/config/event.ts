@@ -1,3 +1,13 @@
+import { mdLink } from '@/utils/mdLink';
+
+const NITROSTACK_PRIVACY_URL = 'https://nitrostack.ai/privacy';
+const NITROSTACK_REGISTRATION_URL =
+  'https://nitrostack.ai/community/6ab511189b83148a43a729f0';
+
+const COMMUNITY_LINK = mdLink('Community', NITROSTACK_REGISTRATION_URL);
+const OFFICIAL_RULES_LINK = mdLink('Official Rules', NITROSTACK_REGISTRATION_URL);
+const NITROSTACK_PRIVACY_LINK = mdLink('Privacy Policy', NITROSTACK_PRIVACY_URL);
+
 export const EVENT_CONFIG = {
   eventName: 'MCP to the Moon',
   eventBrandLine: 'FRONTHYRE × NITROSTACK',
@@ -7,9 +17,9 @@ export const EVENT_CONFIG = {
   duration: '3 Days',
   mode: 'Online',
   participation: 'Solo Participation',
-  registrationUrl: 'https://nitrostack.ai/community/6ab511189b83148a43a729f0',
-  officialRulesUrl: '[URL — NitroStack Official Rules]',
-  nitrostackPrivacyUrl: '[URL — NitroStack Privacy Policy]',
+  registrationUrl: NITROSTACK_REGISTRATION_URL,
+  officialRulesUrl: NITROSTACK_REGISTRATION_URL,
+  nitrostackPrivacyUrl: NITROSTACK_PRIVACY_URL,
   eventStatus: 'Registration Open',
 
   heroEyebrow: 'MCP TO THE MOON',
@@ -19,13 +29,12 @@ export const EVENT_CONFIG = {
   organiserAttribution: 'Organised by NitroStack, with Fronthyre supporting event promotion and community outreach.',
   rulesNotice: 'Participation is subject to NitroStack\u2019s Official Rules.',
 
-  eventDisclosure:
-    'Buildathon is an online, individual-participation event organised and operated solely by NitroStack [Legal Entity Name] and promoted by Fronthyre [Legal Entity Name] as a promotional partner. Dates: 30 October \u2013 1 November 2026, IST. Eligibility, prizes, judging and all other terms are set out in the Official Rules at [link], which prevail over any summary on this page. Fronthyre is not the organiser, host or prize provider.',
+  eventDisclosure: `Buildathon is an online, individual-participation event organised and operated solely by NitroStack [NitroStack Inc] and promoted by Fronthyre [Fronthyre Inc] as a promotional partner. Dates: 30 October \u2013 1 November 2026, IST. Eligibility, prizes, judging and all other terms are set out in the ${OFFICIAL_RULES_LINK}, which prevail over any summary on this page. Fronthyre is not the organiser, host or prize provider.`,
 
   aboutDescription:
     'MCP to the Moon is a developer Buildathon focused on building with the Model Context Protocol (MCP) and AI. Participants build individually, explore what is possible with MCP and AI-assisted development, and take their projects from idea to working prototype over three focused days.',
   aboutLegalPositioning:
-    'Organised by NitroStack [Legal Entity Name]. Participation is individual and subject to the Official Rules. Fronthyre supports the event as a promotional partner.',
+    'Organised by NitroStack [NitroStack Inc]. Participation is individual and subject to the Official Rules. Fronthyre supports the event as a promotional partner.',
 
   eventInfoNote:
     'The Buildathon is free to enter and designed for solo participation, subject to NitroStack eligibility requirements and Official Rules.',
@@ -66,8 +75,7 @@ export const EVENT_CONFIG = {
   communityPromotion: 'Shared with the React JS & React Native Developers - India community. LinkedIn is a registered trademark of LinkedIn Corporation. This event is not organised, sponsored or endorsed by LinkedIn or the community.',
 
   registrationNote: 'Registration is administered by NitroStack and subject to the Official Hackathon Rules.',
-  externalRegistrationDisclosure:
-    'Registration is hosted by NitroStack at https://nitrostack.ai/community/6ab511189b83148a43a729f0. You are leaving Fronthyre\u2019s website. NitroStack is solely responsible for the personal data collected there under its Privacy Policy at [URL \u2014 NitroStack Privacy Policy]. Fronthyre does not receive your registration data unless you separately agree.',
+  externalRegistrationDisclosure: `Registration is hosted by NitroStack on ${COMMUNITY_LINK}. You are leaving Fronthyre\u2019s website. NitroStack is solely responsible for the personal data collected there under its ${NITROSTACK_PRIVACY_LINK}. Fronthyre does not receive your registration data unless you separately agree.`,
   participantResponsibility:
     'Use of NitroStack tools and tokens is subject to NitroStack\u2019s terms. Participants must comply with all third-party and open-source licences and are responsible for the originality and lawfulness of their submissions.',
 
@@ -79,8 +87,14 @@ export const EVENT_CONFIG = {
 
   faq: [
     { q: 'Who organises and operates the Buildathon?', a: 'NitroStack is the sole organiser and operator of the Buildathon. Fronthyre is a promotional partner only and does not organise, operate, judge or provide prizes.' },
-    { q: 'Where do I register?', a: 'Registration is handled through the MCP to the Moon portal by NitroStack at [URL]. You are leaving Fronthyre\u2019s website.' },
-    { q: 'Where are the Official Rules?', a: 'The Official Rules are issued by NitroStack at [link]. In case of any conflict between this page and the Official Rules, the Official Rules prevail.' },
+    {
+      q: 'Where do I register?',
+      a: `Registration is handled through the MCP to the Moon portal by NitroStack on ${COMMUNITY_LINK}. You are leaving Fronthyre\u2019s website.`,
+    },
+    {
+      q: 'Where are the Official Rules?',
+      a: `The Official Rules are issued by NitroStack on ${OFFICIAL_RULES_LINK}. In case of any conflict between this page and the Official Rules, the Official Rules prevail.`,
+    },
     { q: 'Who provides the prizes?', a: 'Prizes are provided solely by NitroStack in accordance with the Official Rules.' },
     { q: 'Who handles judging?', a: 'Submissions are evaluated by NitroStack against the criteria published in the Official Rules.' },
     { q: 'Do I need a team, or is the Buildathon solo?', a: 'The Buildathon is designed for individual participation. Participants register and build individually.' },
