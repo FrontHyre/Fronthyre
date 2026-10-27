@@ -1,52 +1,51 @@
 import { Link } from 'react-router-dom';
 import { SITE_CONFIG } from '@/config/site';
+import FronthyreBrandLockup from '@/components/brand/FronthyreBrandLockup';
 
+/** Full lockup — SEO / Open Graph */
 export const FRONTHYRE_LOGO_SRC =
   '/assets/brand/Fronthyre_LOGO_FINAL_-_NEW_-_TRANSPARENT_BG.png';
 
-/** Wordmark + icon without tagline — compact lockups (e.g. Buildathon partner bar) */
+/** Icon + text PNG lockup — legacy combined asset */
 export const FRONTHYRE_WORDMARK_SRC = '/assets/brand/Fronthyre_NAME_WITH_LOGO.png';
 
 interface LogoProps {
   to?: string;
   showStatus?: boolean;
+  showTagline?: boolean;
   className?: string;
   variant?: 'header' | 'footer';
 }
 
-const imageVariantClasses: Record<NonNullable<LogoProps['variant']>, string> = {
-  header:
-    'h-8 w-auto max-w-[min(46vw,168px)] sm:max-w-[200px] sm:h-9 md:max-w-[260px] md:h-10',
-  footer:
-    'h-10 w-auto max-w-[min(72vw,220px)] sm:h-12 sm:max-w-[280px] md:max-w-[340px]',
+const taglineClass: Record<NonNullable<LogoProps['variant']>, string> = {
+  header: 'text-[10px] sm:text-[11px] md:text-xs leading-snug text-fr-secondary',
+  footer: 'text-xs sm:text-sm leading-snug text-fr-secondary',
 };
 
 export default function Logo({
   to = '/',
   showStatus = true,
+  showTagline = true,
   className = '',
   variant = 'header',
 }: LogoProps) {
-  const imageClass = imageVariantClasses[variant];
-
   return (
     <Link
       to={to}
-      className={`inline-flex min-w-0 max-w-full items-center gap-2 group ${className}`}
-      aria-label="Fronthyre home"
+      className={`group inline-flex max-w-full shrink-0 flex-col items-start gap-1.5 transition-opacity hover:opacity-90 ${className}`}
+      aria-label={`${SITE_CONFIG.name} — ${SITE_CONFIG.tagline}`}
     >
-      <img
-        src={FRONTHYRE_LOGO_SRC}
-        alt="Fronthyre — Frontend talent. Better opportunities."
-        width={340}
-        height={80}
-        decoding="async"
-        className={`shrink object-contain object-left transition-opacity group-hover:opacity-80 ${imageClass}`}
-      />
-      {showStatus && (
-        <span className="hidden shrink-0 sm:inline-block text-[10px] font-mono font-semibold uppercase tracking-widest text-fr-muted px-1.5 py-0.5 rounded border border-fr-border">
-          {SITE_CONFIG.status}
-        </span>
+      <span className="flex shrink-0 items-center gap-2">
+        <FronthyreBrandLockup size={variant} />
+        {showStatus && (
+          <span className="hidden shrink-0 lg:inline-block rounded border border-fr-border px-1.5 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-widest text-fr-muted">
+            {SITE_CONFIG.status}
+          </span>
+        )}
+      </span>
+
+      {showTagline && (
+        <span className={`max-w-xs ${taglineClass[variant]}`}>{SITE_CONFIG.tagline}</span>
       )}
     </Link>
   );

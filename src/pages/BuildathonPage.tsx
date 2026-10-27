@@ -24,7 +24,7 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import FAQ from '@/components/ui/FAQ';
 import LegalDisclosure from '@/components/ui/LegalDisclosure';
 import NitroStackLogo from '@/components/brand/NitroStackLogo';
-import { FRONTHYRE_WORDMARK_SRC } from '@/components/brand/Logo';
+import FronthyreBrandLockup from '@/components/brand/FronthyreBrandLockup';
 import { useLocation } from 'react-router-dom';
 import { EVENT_CONFIG } from '@/config/event';
 
@@ -81,11 +81,9 @@ export default function BuildathonPage() {
           <div className="text-center max-w-3xl mx-auto">
             {/* Partner lockup */}
             <div className="inline-flex flex-wrap items-center justify-center gap-x-3 sm:gap-x-4 px-5 py-3 sm:px-6 sm:py-3.5 rounded-full bg-fr-card border border-cyan-500/20 mb-8 animate-fade-in">
-              <img
-                src={FRONTHYRE_WORDMARK_SRC}
-                alt="Fronthyre"
-                className="h-8 w-auto sm:h-9 object-contain object-center"
-              />
+              <span aria-label="Fronthyre">
+                <FronthyreBrandLockup size="compact" />
+              </span>
               <span className="text-sm font-mono font-semibold text-fr-muted">×</span>
               <div className="flex items-center gap-2">
                 <img
