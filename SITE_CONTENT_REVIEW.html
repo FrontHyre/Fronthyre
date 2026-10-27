@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fronthyre — Complete Site Content for Legal & Developer Review</title>
+<style>
+  @page {
+    margin: 2cm 2.5cm;
+    @bottom-center {
+      content: "Page " counter(page) " of " counter(pages);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 9px;
+      color: #888;
+    }
+  }
+  @page :first {
+    margin-top: 0;
+    @bottom-center { content: none; }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Helvetica Neue', Arial, 'Segoe UI', sans-serif;
+    font-size: 11px;
+    line-height: 1.6;
+    color: #1a1a2e;
+    background: #fff;
+  }
+
+  /* Cover page */
+  .cover {
+    page-break-after: always;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(135deg, #0a0e1a 0%, #111827 50%, #0a0e1a 100%);
+    color: #fff;
+    padding: 40px;
+  }
+  .cover .logo-text {
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #22d3ee, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .cover .cover-subtitle {
+    font-size: 14px;
+    color: #94a3b8;
+    margin-bottom: 40px;
+    font-weight: 400;
+  }
+  .cover .cover-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .cover .cover-desc {
+    font-size: 13px;
+    color: #64748b;
+    max-width: 500px;
+    line-height: 1.7;
+  }
+  .cover .cover-meta {
+    margin-top: 50px;
+    font-size: 11px;
+    color: #475569;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+  }
+  .cover .cover-badge {
+    display: inline-block;
+    margin-top: 24px;
+    padding: 6px 16px;
+    border: 1px solid #1e293b;
+    border-radius: 20px;
+    font-size: 10px;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+    color: #22d3ee;
+    text-transform: uppercase;
+  }
+
+  /* Table of contents */
+  .toc {
+    page-break-after: always;
+    padding: 20px 0;
+  }
+  .toc h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .toc ol {
+    list-style: none;
+    counter-reset: toc-counter;
+  }
+  .toc li {
+    counter-increment: toc-counter;
+    margin-bottom: 8px;
+    padding-left: 28px;
+    position: relative;
+  }
+  .toc li::before {
+    content: counter(toc-counter, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    color: #06b6d4;
+    font-weight: 600;
+  }
+  .toc a {
+    text-decoration: none;
+    color: #334155;
+    font-size: 12px;
+  }
+  .toc a:hover { color: #06b6d4; }
+
+  /* Main content */
+  .content { padding: 0; }
+
+  h1.section-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 30px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e2e8f0;
+    page-break-after: avoid;
+  }
+  h1.section-title:first-of-type { margin-top: 0; }
+
+  h2 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-top: 24px;
+    margin-bottom: 10px;
+    page-break-after: avoid;
+  }
+
+  h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+    margin-top: 16px;
+    margin-bottom: 6px;
+    page-break-after: avoid;
+  }
+
+  p {
+    margin-bottom: 8px;
+    color: #475569;
+  }
+
+  ul, ol {
+    margin-bottom: 10px;
+    padding-left: 20px;
+  }
+  li {
+    margin-bottom: 4px;
+    color: #475569;
+  }
+
+  /* Labels / metadata */
+  .label {
+    font-family: 'Courier New', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #06b6d4;
+    font-weight: 600;
+  }
+
+  .field-label {
+    font-weight: 600;
+    color: #1e293b;
+  }
+
+  /* Cards / boxes */
+  .info-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 10px 0;
+  }
+  .disclaimer-box {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-left: 3px solid #f59e0b;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin: 10px 0;
+  }
+  .disclaimer-box p {
+    font-size: 10px;
+    color: #92400e;
+    margin-bottom: 0;
+  }
+  .placeholder-box {
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin: 8px 0;
+  }
+  .placeholder-box p {
+    font-size: 10px;
+    color: #475569;
+    margin-bottom: 0;
+  }
+  .placeholder-tag {
+    display: inline-block;
+    background: #e2e8f0;
+    color: #475569;
+    font-family: 'Courier New', monospace;
+    font-size: 9px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin: 2px 0;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 10px;
+  }
+  th {
+    text-align: left;
+    padding: 6px 10px;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    font-weight: 600;
+    color: #1e293b;
+  }
+  td {
+    padding: 6px 10px;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #f8fafc; }
+
+  /* Badge */
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .badge-amber { background: #fef3c7; color: #92400e; }
+  .badge-cyan { background: #cffafe; color: #0e7490; }
+  .badge-slate { background: #f1f5f9; color: #475569; }
+
+  /* Separator */
+  hr {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 20px 0;
+  }
+
+  /* Page breaks */
+  .page-break { page-break-before: always; }
+
+  /* Links */
+  a { color: #06b6d4; }
+
+  /* FAQ */
+  .faq-item {
+    margin-bottom: 12px;
+  }
+  .faq-q {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 11px;
+  }
+  .faq-a {
+    color: #475569;
+    font-size: 11px;
+    margin-top: 2px;
+  }
+
+  /* Form fields list */
+  .form-section {
+    margin-bottom: 14px;
+  }
+  .form-section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 6px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  /* Stats grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin: 10px 0;
+  }
+  .stat-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 10px;
+    text-align: center;
+  }
+  .stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .stat-label {
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #64748b;
+    margin-top: 2px;
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover">
+  <div class="logo-text">Fronthyre</div>
+  <div class="cover-subtitle">Frontend talent. Better opportunities.</div>
+  <div class="cover-title">Complete Site Content<br>for Legal &amp; Developer Review</div>
+  <div class="cover-desc">This document captures every piece of visible text across all pages of the Fronthyre pre-launch website, including all disclaimers, legal placeholders, and configuration values.</div>
+  <div class="cover-badge">Pre-Launch Prototype</div>
+  <div class="cover-meta">Generated: September 17, 2026 &nbsp;|&nbsp; DRAFT v0.1</div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#sec1">Global Elements (Header &amp; Footer)</a></li>
+    <li><a href="#sec2">Homepage</a></li>
+    <li><a href="#sec3">Buildathon Page</a></li>
+    <li><a href="#sec4">Early Access Page</a></li>
+    <li><a href="#sec5">About Page</a></li>
+    <li><a href="#sec6">Privacy Policy</a></li>
+    <li><a href="#sec7">Terms of Use</a></li>
+    <li><a href="#sec8">Cookie Policy</a></li>
+    <li><a href="#sec9">Privacy Requests</a></li>
+    <li><a href="#sec10">Contact Page</a></li>
+    <li><a href="#sec11">Configuration &amp; Placeholders</a></li>
+  </ol>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+<!-- 1. GLOBAL ELEMENTS -->
+<h1 class="section-title" id="sec1">1. Global Elements (Header &amp; Footer)</h1>
+
+<h2>Header (Navigation Bar)</h2>
+<ul>
+  <li><span class="field-label">Logo:</span> Fronthyre logo</li>
+  <li><span class="field-label">Nav links:</span> Home | Buildathon | Early Access | About</li>
+  <li><span class="field-label">CTA button:</span> "Join Early Access" (links to /early-access)</li>
+  <li><span class="field-label">Mobile:</span> Hamburger menu with same links + "Join Early Access" button</li>
+</ul>
+
+<h2>Footer</h2>
+<ul>
+  <li><span class="field-label">Logo:</span> Fronthyre logo with status indicator</li>
+  <li><span class="field-label">Tagline:</span> "Frontend talent. Better opportunities."</li>
+  <li><span class="field-label">Status:</span> "PRE-LAUNCH"</li>
+  <li><span class="field-label">Navigation links:</span> Home | Buildathon | Early Access | About</li>
+  <li><span class="field-label">Legal links:</span> Privacy Policy | Terms | Cookie Policy | Privacy Requests | Contact</li>
+</ul>
+
+<div class="info-box">
+  <p><strong>Buildathon note:</strong> "Buildathon registration is handled externally by NitroStack. Fronthyre does not collect Buildathon registration information."</p>
+</div>
+<ul>
+  <li><span class="field-label">Copyright:</span> "© 2026 Fronthyre. All rights reserved."</li>
+  <li><span class="field-label">Prototype notice:</span> "Pre-launch design prototype — not a live data collection system."</li>
+</ul>
+
+<!-- 2. HOMEPAGE -->
+<h1 class="section-title page-break" id="sec2">2. Homepage (<code>/</code>)</h1>
+
+<h2>SEO</h2>
+<table>
+  <tr><th style="width:120px">Field</th><th>Value</th></tr>
+  <tr><td>Title</td><td>Fronthyre — Frontend Talent Network</td></tr>
+  <tr><td>Description</td><td>Fronthyre is building a frontend-focused talent network for developers and UI professionals working across modern web and mobile technologies.</td></tr>
+</table>
+
+<h2>Hero Section</h2>
+<ul>
+  <li><span class="field-label">Status badge:</span> "PRE-LAUNCH"</li>
+  <li><span class="field-label">Headline:</span> "Frontend talent. Better opportunities."</li>
+  <li><span class="field-label">Subtext:</span> "A dedicated talent network for frontend developers, UI professionals, and engineers shaping modern web, mobile, and digital experiences."</li>
+  <li><span class="field-label">Buttons:</span> "Join Early Access" (&rarr; /early-access) | "Explore Buildathon" (&rarr; /buildathon)</li>
+</ul>
+<table>
+  <tr><th>Label</th><th>Value</th></tr>
+  <tr><td>WHAT</td><td>Frontend talent network</td></tr>
+  <tr><td>WHERE</td><td>India</td></tr>
+  <tr><td>WHO</td><td>Frontend professionals</td></tr>
+</table>
+
+<h2>What Fronthyre Is</h2>
+<ul>
+  <li><span class="field-label">Eyebrow:</span> "What Fronthyre Is"</li>
+  <li><span class="field-label">Title:</span> "A network built for frontend professionals"</li>
+  <li><span class="field-label">Description:</span> "Not another generic job board. Fronthyre is focused on frontend talent and the teams that need them."</li>
+</ul>
+<table>
+  <tr><th>Card</th><th>Title</th><th>Description</th></tr>
+  <tr><td>1</td><td>Frontend Talent</td><td>Connect with professionals focused on frontend and UI engineering.</td></tr>
+  <tr><td>2</td><td>Modern Skills</td><td>Discover talent across modern frontend technologies and development practices.</td></tr>
+  <tr><td>3</td><td>Career Opportunities</td><td>Create a future-facing network for frontend professionals and employers.</td></tr>
+  <tr><td>4</td><td>Developer Community</td><td>Build a community around frontend development and modern technology.</td></tr>
+</table>
+
+<h2>Modern Frontend Skills</h2>
+<ul>
+  <li><span class="field-label">Eyebrow:</span> "Technology Coverage"</li>
+  <li><span class="field-label">Title:</span> "Modern frontend skills"</li>
+  <li><span class="field-label">Description:</span> "Fronthyre is designed around professionals working across modern frontend technologies."</li>
+</ul>
+<p><span class="field-label">Skill badges:</span> React | React Native | TypeScript | JavaScript | Next.js | HTML | CSS | UI Engineering | Frontend Architecture | Web Development | Mobile Development</p>
+
+<div class="disclaimer-box">
+  <p><strong>Tech disclaimer:</strong> "Technology names are used descriptively to identify relevant skills and technologies. Final wording subject to legal review."</p>
+</div>
+<div class="disclaimer-box">
+  <p><strong>Legal note box:</strong> "Technology names are referenced only to describe relevant skills, technologies and areas of expertise. Fronthyre is independently operated and is not affiliated with or endorsed by the respective technology owners unless expressly stated."</p>
+  <p><strong>Legal note:</strong> "Final wording subject to legal review."</p>
+</div>
+
+<h2>Developer Community</h2>
+<ul>
+  <li><span class="field-label">Eyebrow:</span> "Community"</li>
+  <li><span class="field-label">Title:</span> "Frontend Developer Community"</li>
+  <li><span class="field-label">Description:</span> "Fronthyre manages an independent developer community on LinkedIn® focused on React JS, React Native and modern frontend development."</li>
+</ul>
+<div class="info-box">
+  <p><strong>Community card:</strong></p>
+  <ul style="margin-top:6px">
+    <li><strong>Name:</strong> "React JS &amp; React Native Developers — India"</li>
+    <li><strong>Description:</strong> "A developer community focused on React JS, React Native and modern frontend development."</li>
+    <li><strong>Member count:</strong> "240K+ members"</li>
+    <li><strong>Platform label:</strong> "Community on LinkedIn®"</li>
+    <li><strong>CTA:</strong> "Visit the community" (links to https://www.linkedin.com/groups/10447580/, opens in new tab)</li>
+    <li><strong>Size note:</strong> "Community size shown for reference and may change over time."</li>
+  </ul>
+</div>
+<div class="disclaimer-box">
+  <p><strong>LinkedIn disclaimer:</strong> "LinkedIn® is a registered trademark of LinkedIn Corporation and its affiliates. Fronthyre is not affiliated with, sponsored by, or endorsed by LinkedIn Corporation or its affiliates."</p>
+  <p><strong>Legal note:</strong> "Final wording subject to legal review."</p>
+</div>
+
+<h2>Early Access CTA</h2>
+<ul>
+  <li><span class="field-label">Eyebrow:</span> "Early Access"</li>
+  <li><span class="field-label">Title:</span> "Get in early."</li>
+  <li><span class="field-label">Description:</span> "Join the Fronthyre talent network before the platform officially launches."</li>
+  <li><span class="field-label">Button:</span> "Join Early Access" (&rarr; /early-access)</li>
+</ul>
+<p><span class="field-label">Benefits list:</span></p>
+<ul>
+  <li>Early access</li>
+  <li>Build your professional profile</li>
+  <li>Be considered for future opportunities</li>
+  <li>Stay connected with Fronthyre</li>
+</ul>
+<div class="disclaimer-box">
+  <p>"Joining early access does not guarantee a job, interview, placement, or recruiter contact."</p>
+</div>
+
+<h2>Buildathon Promo</h2>
+<ul>
+  <li><span class="field-label">Badges:</span> "Buildathon" | "Registration Opening Soon"</li>
+  <li><span class="field-label">Title:</span> "MCP to the Moon"</li>
+  <li><span class="field-label">Date:</span> "October 10–12, 2026"</li>
+  <li><span class="field-label">Duration:</span> "3 Days"</li>
+  <li><span class="field-label">Description:</span> "A developer buildathon bringing React JS and React Native builders together to build with MCP and AI."</li>
+  <li><span class="field-label">Button:</span> "View Buildathon" (&rarr; /buildathon)</li>
+</ul>
+
+<!-- 3. BUILDATHON PAGE -->
+<h1 class="section-title page-break" id="sec3">3. Buildathon Page (<code>/buildathon</code>)</h1>
+
+<h2>SEO</h2>
+<table>
+  <tr><th style="width:120px">Field</th><th>Value</th></tr>
+  <tr><td>Title</td><td>MCP to the Moon — Fronthyre × NitroStack | Fronthyre</td></tr>
+  <tr><td>Description</td><td>A developer buildathon focused on MCP and AI-assisted development. October 10-12, 2026. Register on NitroStack.</td></tr>
+</table>
+
+<h2>Hero</h2>
+<ul>
+  <li><span class="field-label">Badges:</span> "Buildathon" | "Registration Opening Soon"</li>
+  <li><span class="field-label">Brand line:</span> "Fronthyre × NitroStack"</li>
+  <li><span class="field-label">Title:</span> "MCP to the Moon"</li>
+  <li><span class="field-label">Description:</span> "A developer buildathon focused on MCP and AI-assisted development."</li>
+  <li><span class="field-label">Date:</span> "October 10–12, 2026" | <span class="field-label">Duration:</span> "3 Days" | <span class="field-label">Mode:</span> "Online"</li>
+  <li><span class="field-label">Buttons:</span> "Register on NitroStack" (&rarr; https://nitrostack.dev) | "Join Fronthyre Early Access" (&rarr; /early-access)</li>
+  <li><span class="field-label">Note:</span> "Registration is handled externally by NitroStack."</li>
+</ul>
+
+<h2>About the Buildathon</h2>
+<p><span class="field-label">Eyebrow:</span> "About" | <span class="field-label">Title:</span> "About the Buildathon"</p>
+<p>"MCP to the Moon is a developer buildathon focused on exploring the Model Context Protocol (MCP) and AI-assisted development. The event provides an opportunity for participants to learn, experiment, build projects, and share what they create."</p>
+<p>"Fronthyre is sharing information about the event with relevant developer communities and directing interested participants to NitroStack for official event information and registration. Official event information, eligibility, participation format, judging, prizes, mentors, submission requirements, and other event details are determined by NitroStack."</p>
+
+<h2>Community Outreach</h2>
+<p><span class="field-label">Title:</span> "Community promotion &amp; developer outreach"</p>
+<p>"Fronthyre is sharing information about MCP to the Moon with relevant developer communities and directing interested participants to NitroStack for official event information and registration."</p>
+
+<h2>Why Participate</h2>
+<table>
+  <tr><th>Card</th><th>Title</th><th>Description</th></tr>
+  <tr><td>1</td><td>Build with MCP &amp; AI</td><td>Explore building with Model Context Protocol and AI-assisted development alongside fellow builders.</td></tr>
+  <tr><td>2</td><td>Modern Development</td><td>Explore MCP, AI-assisted development, and modern application-building workflows.</td></tr>
+  <tr><td>3</td><td>Developer Community</td><td>Connect with a community of developers building with modern tooling and AI.</td></tr>
+  <tr><td>4</td><td>Build Something Real</td><td>Create working applications, tools, and projects over three focused days of building.</td></tr>
+  <tr><td>5</td><td>Learning &amp; Resources</td><td>Explore MCP resources and learning material throughout the event.</td></tr>
+  <tr><td>6</td><td>Prizes &amp; Opportunities</td><td>Official event opportunities and participation details will be announced by NitroStack.</td></tr>
+</table>
+
+<h2>Who Should Join</h2>
+<p><span class="field-label">Description:</span> "The event is intended for developers and builders interested in MCP, AI-assisted development, and modern application development."</p>
+<div class="disclaimer-box"><p>"Official eligibility is determined by NitroStack."</p></div>
+<p><span class="field-label">Tags:</span> Developers | Software Engineers | Frontend &amp; UI Professionals | Product Builders | AI Builders | Technology Enthusiasts</p>
+
+<h2>What You Can Build</h2>
+<p><span class="field-label">Description:</span> "These are examples rather than official competition tracks unless confirmed by NitroStack."</p>
+<table>
+  <tr><th>Card</th><th>Title</th><th>Description</th></tr>
+  <tr><td>1</td><td>MCP-Powered Tools</td><td>Build developer tools and integrations leveraging the Model Context Protocol.</td></tr>
+  <tr><td>2</td><td>AI-Assisted Applications</td><td>Create applications that integrate AI capabilities into modern development workflows.</td></tr>
+  <tr><td>3</td><td>Developer Experiences</td><td>Build tools and experiences that improve developer productivity with MCP and AI.</td></tr>
+  <tr><td>4</td><td>Open Source Projects</td><td>Contribute to or start open source projects during the buildathon.</td></tr>
+</table>
+
+<h2>How It Works</h2>
+<table>
+  <tr><th style="width:60px">Step</th><th style="width:140px">Title</th><th>Description</th></tr>
+  <tr><td>01</td><td>Register</td><td>Register through the official NitroStack platform.</td></tr>
+  <tr><td>02</td><td>Learn</td><td>Explore MCP resources and learning material.</td></tr>
+  <tr><td>03</td><td>Choose an Idea</td><td>Choose a problem or idea to build.</td></tr>
+  <tr><td>04</td><td>Build</td><td>Build using MCP, AI-assisted development, and supported technologies.</td></tr>
+  <tr><td>05</td><td>Submit</td><td>Submit according to official event guidelines.</td></tr>
+</table>
+
+<h2>Event Timeline</h2>
+<p><span class="field-label">Description:</span> "Three-day buildathon schedule. Detailed activities and timings will be announced by NitroStack."</p>
+<table>
+  <tr><th>Day</th><th>Date</th><th>Title</th><th>Description</th></tr>
+  <tr><td>Day 1</td><td>October 10, 2026</td><td>Buildathon Begins</td><td>Buildathon begins. Official opening details and schedule will be announced by NitroStack.</td></tr>
+  <tr><td>Day 2</td><td>October 11, 2026</td><td>Continued Building</td><td>Continued building and event activities. Official schedule and participation details will be announced by NitroStack.</td></tr>
+  <tr><td>Day 3</td><td>October 12, 2026</td><td>Submissions &amp; Closing</td><td>Project submissions and closing activities according to official NitroStack event guidelines.</td></tr>
+</table>
+
+<h2>NitroStack Section</h2>
+<p><span class="field-label">Title:</span> "Build with NitroStack"</p>
+<p>"Official NitroStack information to be confirmed."</p>
+<div class="info-box"><p>"NitroStack branding will be added once provided or approved by NitroStack."</p></div>
+
+<h2>Previous Events</h2>
+<div class="stats-grid">
+  <div class="stat-card"><div class="stat-value">1,764</div><div class="stat-label">Registrations</div></div>
+  <div class="stat-card"><div class="stat-value">441</div><div class="stat-label">Registered Teams</div></div>
+  <div class="stat-card"><div class="stat-value">168</div><div class="stat-label">Shipped Projects</div></div>
+  <div class="stat-card"><div class="stat-value">800+</div><div class="stat-label">Builders</div></div>
+  <div class="stat-card"><div class="stat-value">58</div><div class="stat-label">MCP Applications</div></div>
+</div>
+<div class="disclaimer-box"><p>"Previous-event statistics are provided for historical context and do not represent the October 2026 event."</p></div>
+
+<h2>Fronthyre's Role</h2>
+<p><span class="field-label">Description:</span> "Fronthyre is sharing information about MCP to the Moon with its relevant developer community and directing interested developers to NitroStack for official event information and registration."</p>
+<table>
+  <tr><th>Fronthyre's Role</th><th>NitroStack's Role</th></tr>
+  <tr>
+    <td>
+      <ul>
+        <li>Community promotion &amp; developer outreach</li>
+        <li>Event information sharing</li>
+        <li>Directing interested developers to NitroStack</li>
+        <li>No Buildathon registration data collection</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>Official event information</li>
+        <li>Official registration</li>
+        <li>Official event requirements and details</li>
+        <li>Other event responsibilities as confirmed by NitroStack</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+<h2>Registration CTA</h2>
+<p><span class="field-label">Title:</span> "Ready to build?" | <span class="field-label">Description:</span> "Register on the official NitroStack platform."</p>
+<p><span class="field-label">Buttons:</span> "Register on NitroStack" (&rarr; https://nitrostack.dev) | "Join Fronthyre Early Access" (&rarr; /early-access)</p>
+<div class="info-box"><p>"Fronthyre provides information about the event and directs interested developers to the official NitroStack registration platform. Fronthyre does not collect Buildathon registration information."</p></div>
+
+<h2>Final Role Disclaimer</h2>
+<div class="disclaimer-box">
+  <p>"Fronthyre is providing community promotion and event information and directing interested participants to NitroStack for official event information and registration. Official event rules, eligibility, schedules, submissions, judging, prizes, and other event details are determined by NitroStack."</p>
+</div>
+
+<h2>FAQ</h2>
+<div class="faq-item">
+  <p class="faq-q">Q: How do I register?</p>
+  <p class="faq-a">A: Registration is handled through NitroStack. Click the "Register on NitroStack" button to go to the official registration page.</p>
+</div>
+<div class="faq-item">
+  <p class="faq-q">Q: When is the buildathon?</p>
+  <p class="faq-a">A: October 10–12, 2026.</p>
+</div>
+<div class="faq-item">
+  <p class="faq-q">Q: Is it online?</p>
+  <p class="faq-a">A: Yes, the event is planned as an online buildathon.</p>
+</div>
+<div class="faq-item">
+  <p class="faq-q">Q: Who can participate?</p>
+  <p class="faq-a">A: Developers and builders interested in the technologies and themes of the event, subject to official event eligibility requirements.</p>
+</div>
+<div class="faq-item">
+  <p class="faq-q">Q: Do I need previous MCP experience?</p>
+  <p class="faq-a">A: No prior MCP experience is required, subject to official event information.</p>
+</div>
+<div class="faq-item">
+  <p class="faq-q">Q: What can I build?</p>
+  <p class="faq-a">A: Projects using MCP, AI and supported technologies, subject to official event guidelines.</p>
+</div>
+<div class="faq-item">
+  <p class="faq-q">Q: Where do I register?</p>
+  <p class="faq-a">A: Official NitroStack registration platform.</p>
+</div>
+
+<!-- 4. EARLY ACCESS PAGE -->
+<h1 class="section-title page-break" id="sec4">4. Early Access Page (<code>/early-access</code>)</h1>
+
+<h2>SEO</h2>
+<table>
+  <tr><th style="width:120px">Field</th><th>Value</th></tr>
+  <tr><td>Title</td><td>Join Early Access — Fronthyre</td></tr>
+  <tr><td>Description</td><td>Get early access to Fronthyre as we build a frontend-focused talent network for developers and UI professionals.</td></tr>
+</table>
+
+<h2>Header</h2>
+<ul>
+  <li><span class="field-label">Badge:</span> "Pre-launch"</li>
+  <li><span class="field-label">Title:</span> "Join Fronthyre Early Access"</li>
+  <li><span class="field-label">Description:</span> "Get early access to Fronthyre as we build a frontend-focused talent network for developers and UI professionals."</li>
+</ul>
+
+<div class="disclaimer-box">
+  <p><strong>Prototype Notice:</strong> "Fronthyre is currently in pre-launch. This prototype does not store submitted information. Submissions are simulated and not transmitted to any external service."</p>
+</div>
+
+<h2>Early Access Form — All Fields</h2>
+
+<div class="form-section">
+  <div class="form-section-title">Basic Information</div>
+  <ul>
+    <li><strong>Full Name</strong> (required) — placeholder: "Your full name"</li>
+    <li><strong>Email</strong> (required, validated) — placeholder: "you@example.com"</li>
+    <li><strong>Mobile Number</strong> (optional) — placeholder: "+91 98765 43210"</li>
+  </ul>
+</div>
+
+<div class="form-section">
+  <div class="form-section-title">Professional Information</div>
+  <ul>
+    <li><strong>Current Role</strong> (optional) — placeholder: "e.g. Frontend Engineer"</li>
+    <li><strong>Years of Experience</strong> (optional) — placeholder: "e.g. 3"</li>
+    <li><strong>Experience Level</strong> (optional) — options: Entry (0-1 years), Junior (1-3 years), Mid (3-5 years), Senior (5-8 years), Lead/Staff (8+ years)</li>
+  </ul>
+</div>
+
+<div class="form-section">
+  <div class="form-section-title">Skills</div>
+  <ul>
+    <li><strong>Primary Skills</strong> (optional) — "Comma-separated list of your strongest skills." — placeholder: "e.g. React, TypeScript, CSS"</li>
+    <li><strong>Secondary Skills</strong> (optional) — "Additional skills you're comfortable with." — placeholder: "e.g. Node.js, GraphQL, Testing"</li>
+  </ul>
+</div>
+
+<div class="form-section">
+  <div class="form-section-title">Career Preferences</div>
+  <ul>
+    <li><strong>Preferred Location</strong> (optional) — placeholder: "e.g. Bangalore, Mumbai, Remote"</li>
+    <li><strong>Work Preference</strong> (optional) — options: Remote, Hybrid, On-site, Open to all</li>
+    <li><strong>Job Search Status</strong> (optional) — options: Actively looking, Passively exploring, Not looking right now</li>
+    <li><strong>Notice Period</strong> (optional) — options: Immediately available, 15 days, 30 days, 60 days, 90 days</li>
+  </ul>
+</div>
+
+<div class="form-section">
+  <div class="form-section-title">Professional Links</div>
+  <ul>
+    <li><strong>LinkedIn</strong> (optional) — placeholder: "https://linkedin.com/in/username"</li>
+    <li><strong>GitHub</strong> (optional) — placeholder: "https://github.com/username"</li>
+    <li><strong>Portfolio</strong> (optional) — placeholder: "https://yourportfolio.com"</li>
+  </ul>
+</div>
+
+<div class="form-section">
+  <div class="form-section-title">Resume</div>
+  <ul>
+    <li><strong>Resume upload</strong> (optional) — "Your resume is optional and is not publicly displayed as part of Early Access."</li>
+  </ul>
+</div>
+
+<h2>Privacy Notice (in form)</h2>
+<div class="info-box">
+  <p>"We collect the information you provide to register you for Fronthyre Early Access, maintain your Early Access profile and communicate relevant information about Fronthyre, subject to the purposes described in our Privacy Policy."</p>
+  <p>"Your resume is optional and is not publicly displayed as part of Early Access."</p>
+  <p>"Please review our Privacy Policy for information about what we collect, why we collect it, how it is handled, retention, sharing and your available privacy rights."</p>
+  <p><span class="badge badge-amber">Final Wording Subject to Legal Review</span></p>
+</div>
+
+<h2>Consent</h2>
+<ul>
+  <li><strong>Required:</strong> "I agree to Fronthyre processing the information I provide for Early Access as described in the Privacy Policy." (must be checked)</li>
+  <li><strong>Optional:</strong> "I would like to receive promotional communications from Fronthyre." — "Optional. You can opt out at any time."</li>
+</ul>
+
+<h2>Age Eligibility</h2>
+<ul>
+  <li><strong>Required:</strong> "I confirm that I meet Fronthyre's minimum age requirement." (must be checked)</li>
+</ul>
+<div class="disclaimer-box"><p>"Final age/eligibility wording subject to legal review. Date of birth is not collected."</p></div>
+
+<h2>Submit</h2>
+<ul>
+  <li><span class="field-label">Button:</span> "Submit Early Access"</li>
+  <li><span class="field-label">Privacy note:</span> "Your information is kept private. No public profiles or resume listings."</li>
+</ul>
+<p><span class="field-label">Demo controls (prototype only):</span> "Fill demo data" | "Show error state" | "Reset"</p>
+
+<!-- 5. ABOUT PAGE -->
+<h1 class="section-title page-break" id="sec5">5. About Page (<code>/about</code>)</h1>
+
+<h2>SEO</h2>
+<table>
+  <tr><th style="width:120px">Field</th><th>Value</th></tr>
+  <tr><td>Title</td><td>About — Fronthyre</td></tr>
+  <tr><td>Description</td><td>Fronthyre is building a frontend-focused talent network for frontend professionals in India. Learn about what we're building and why.</td></tr>
+</table>
+
+<h2>Header</h2>
+<ul>
+  <li><span class="field-label">Badge:</span> "About"</li>
+  <li><span class="field-label">Title:</span> "Building a talent network for frontend &amp; UI professionals."</li>
+  <li><span class="field-label">Description:</span> "Fronthyre is building a frontend-focused talent network for professionals across modern web, mobile, UI, and frontend technology stacks — with a focus on connecting talent with relevant career opportunities."</li>
+</ul>
+
+<h2>Content Sections</h2>
+
+<h3>1. What is Fronthyre?</h3>
+<p>"Fronthyre is a frontend-focused talent network being built for professionals across the frontend and UI ecosystem. The platform is designed to help frontend talent discover relevant career opportunities and help companies connect with professionals with frontend-focused skills. Fronthyre is currently in pre-launch."</p>
+
+<h3>2. Why frontend?</h3>
+<p>"Frontend is more than a job title — it is a broad engineering and product discipline spanning web experiences, mobile interfaces, UI engineering, design systems, accessibility, performance, and many evolving technologies. Fronthyre is being built specifically around this ecosystem rather than treating frontend as just another category within a broad job marketplace."</p>
+
+<h3>3. Who is it for?</h3>
+<p>"Fronthyre is for frontend developers, UI engineers, mobile developers, frontend architects, and other professionals working across modern web, mobile, UI, frameworks, libraries, tools, and frontend technology stacks."</p>
+<div class="info-box"><p>"Technology coverage is intentionally broad and will evolve with the frontend ecosystem."</p></div>
+
+<h3>4. For companies — Built with frontend hiring in mind</h3>
+<p>"Fronthyre is being designed to help companies discover frontend and UI professionals across a broad range of modern technology stacks and skill areas. Employer-facing capabilities are currently being developed as part of the platform's pre-launch roadmap."</p>
+
+<h3>5. Where are we today?</h3>
+<p>"Fronthyre is currently in pre-launch. The Early Access experience is being developed as part of the platform's initial launch. The full talent network and opportunity-discovery experience are still being built."</p>
+
+<h3>6. What's next?</h3>
+<p>"Fronthyre is working toward launching a dedicated frontend talent network where professionals can build their presence, discover relevant opportunities, and stay connected with the evolving frontend ecosystem. Early Access is intended to provide updates as Fronthyre develops and launches new capabilities."</p>
+<div class="disclaimer-box"><p>"Fronthyre does not guarantee employment, interviews, job offers, or placement."</p></div>
+
+<h2>CTA</h2>
+<ul>
+  <li><span class="field-label">Title:</span> "Join the network"</li>
+  <li><span class="field-label">Description:</span> "Be among the first frontend professionals to join Fronthyre."</li>
+  <li><span class="field-label">Button:</span> "Join Early Access" (&rarr; /early-access)</li>
+</ul>
+
+<!-- 6. PRIVACY POLICY -->
+<h1 class="section-title page-break" id="sec6">6. Privacy Policy (<code>/privacy</code>)</h1>
+
+<h2>SEO</h2>
+<table>
+  <tr><th style="width:120px">Field</th><th>Value</th></tr>
+  <tr><td>Title</td><td>Privacy Policy — Fronthyre</td></tr>
+  <tr><td>Description</td><td>Privacy Policy for the Fronthyre Early Access network. Legal content placeholder — subject to legal review.</td></tr>
+</table>
+
+<h2>Header</h2>
+<ul>
+  <li><span class="badge badge-amber">Legal Content Placeholder</span></li>
+  <li><span class="field-label">Title:</span> "Privacy Policy"</li>
+  <li><span class="field-label">Description:</span> "This page is a placeholder. Final legal content will be provided and approved by Fronthyre's legal/privacy team before production launch."</li>
+</ul>
+
+<h2>Content</h2>
+<p><strong>Heading:</strong> "Content to be added"</p>
+<p>"The Privacy Policy will cover: information collected, why information is collected, Early Access information, resume information, professional links, communications, cookies/analytics, third-party service providers, data retention, data deletion, withdrawal of consent, user rights, privacy contact, security, and changes to this policy."</p>
+<div class="disclaimer-box"><p>"Final wording subject to legal review. Placeholder text in [BRACKETS] will be replaced with confirmed details."</p></div>
+
+<h2>Key Placeholders</h2>
+<table>
+  <tr><th>Field</th><th>Placeholder</th></tr>
+  <tr><td>Legal Entity</td><td><span class="placeholder-tag">[LEGAL ENTITY NAME — TO BE CONFIRMED]</span></td></tr>
+  <tr><td>Privacy Contact</td><td><span class="placeholder-tag">[PRIVACY CONTACT — TO BE CONFIRMED]</span></td></tr>
+  <tr><td>Grievance Officer</td><td><span class="placeholder-tag">[GRIEVANCE OFFICER — TO BE CONFIRMED]</span></td></tr>
+  <tr><td>Retention Period</td><td><span class="placeholder-tag">[RETENTION PERIOD — TO BE CONFIRMED BY LEGAL ADVISOR]</span></td></tr>
+</table>
+
+<h2>Version Note</h2>
+<div class="info-box"><p>"This is a pre-launch design prototype (DRAFT v0.1). This Privacy Policy is not final and will be reviewed by Fronthyre's legal advisor before real data collection begins."</p></div>
+
+<!-- 7. TERMS OF USE -->
+<h1 class="section-title page-break" id="sec7">7. Terms of Use (<code>/terms</code>)</h1>
+
+<h2>SEO</h2>
+<table>
+  <tr><th style="width:120px">Field</th><th>Value</th></tr>
+  <tr><td>Title</td><td>Terms of Use — Fronthyre</td></tr>
+  <tr><td>Description</td><td>Terms of Use for the Fronthyre Early Access network. Legal content placeholder — subject to legal review.</td></tr>
+</table>
+
+<h2>Header</h2>
+<ul>
+  <li><span class="badge badge-amber">Legal Content Placeholder</span></li>
+  <li><span class="field-label">Title:</span> "Terms of Use"</li>
+  <li><span class="field-label">Description:</span> "This page is a placeholder. Final legal content will be provided and approved by Fronthyre's legal/privacy team before production launch."</li>
+</ul>
+
+<h2>Content</h2>
+<p><strong>Heading:</strong> "Content to be added"</p>
+<p>"The Terms of Use will cover the pre-launch service only. Key topics include:"</p>
+<ul>
+  <li>About Fronthyre</li>
+  <li>Pre-launch status</li>
+  <li>Early Access</li>
+  <li>User-submitted information</li>
+  <li>No employment guarantee</li>
+  <li>No interview guarantee</li>
+  <li>No placement guarantee</li>
+  <li>No recruiter-contact guarantee</li>
+  <li>Acceptable use</li>
+  <li>Intellectual property</li>
+  <li>Third-party websites</li>
+  <li>NitroStack / buildathon external registration</li>
+  <li>Availability</li>
+  <li>Changes to the service</li>
+  <li>Termination</li>
+  <li>Liability provisions</li>
+  <li>Governing law / jurisdiction</li>
+  <li>Contact</li>
+</ul>
+<div class="disclaimer-box"><p>"Final wording subject to legal review. Placeholder text in [BRACKETS] will be replaced with confirmed details."</p></div>
+
+<h2>Key Placeholders</h2>
+<table>
+  <tr><th>Field</th><th>Placeholder</th></tr>
+  <tr><td>Legal Entity</td><td><span class="placeholder-tag">[LEGAL ENTITY NAME — TO BE CONFIRMED]</span></td></tr>
+  <tr><td>Jurisdiction</td><td><span class="placeholder-tag">[GOVERNING LAW / JURISDICTION — TO BE CONFIRMED BY LEGAL COUNSEL]</span></td></tr>
+  <tr><td>Privacy Contact</td><td><span class="placeholder-tag">[PRIVACY CONTACT — TO BE CONFIRMED]</span></td></tr>
+</table>
+
+<h2>Version Note</h2>
+<div class="info-box"><p>"This is a pre-launch design prototype (DRAFT v0.1). These Terms are not final and will be reviewed by Fronthyre's legal advisor before real data collection begins."</p></div>
+
+<!-- 8. COOKIE POLICY -->
+<h1 class="section-title page-break" id="sec8">8. Cookie Policy (<code>/cookie-policy</code>)</h1>
+
+<h2>SEO</h2>
+<table>
+  <tr><th style="width:120px">Field</th><th>Value</th></tr>
+  <tr><td>Title</td><td>Cookie Policy — Fronthyre</td></tr>
+  <tr><td>Description</td><td>Cookie policy for the Fronthyre website. Legal content placeholder — subject to legal review.</td></tr>
+</table>
+
+<h2>Header</h2>
+<ul>
+  <li><span class="badge badge-amber">Legal Content Placeholder</span></li>
+  <li><span class="field-label">Title:</span> "Cookie Policy"</li>
+  <li><span class="field-label">Description:</span> "This page is a placeholder. Final legal content will be provided and approved by Fronthyre's legal/privacy team before production launch."</li>
+</ul>
+
+<h2>Content</h2>
+<p><strong>Heading:</strong> "Content to be added"</p>
+<p>"The Fronthyre prototype does not currently use tracking cookies, analytics, advertising pixels, or similar tracking technologies. A cookie policy will be added here if and when cookies are introduced."</p>
+<div class="disclaimer-box"><p>"Final wording subject to legal review. Placeholder text in [BRACKETS] will be replaced with confirmed details."</p></div>
+
+<h2>Version Note</h2>
+<div class="info-box"><p>"This is a pre-launch design prototype. This Cookie Policy is not final and will be reviewed by Fronthyre's legal advisor before production launch."</p></div>
+
+<!-- 9. PRIVACY REQUESTS -->
+<h1 class="section-title page-break" id="sec9">9. Privacy Requests (<code>/privacy-requests</code>)</h1>
+
+<h2>SEO</h2>
+<table>
+  <tr><th style="width:120px">Field</th><th>Value</th></tr>
+  <tr><td>Title</td><td>Privacy Requests — Fronthyre</td></tr>
+  <tr><td>Description</td><td>Submit privacy and data protection requests to Fronthyre. Legal content placeholder — subject to legal review.</td></tr>
+</table>
+
+<h2>Header</h2>
+<ul>
+  <li><span class="badge badge-amber">Legal Content Placeholder</span></li>
+  <li><span class="field-label">Title:</span> "Privacy Requests"</li>
+  <li><span class="field-label">Description:</span> "This page is a placeholder. A privacy request mechanism will be added once the production system is built and legal review is complete."</li>
+</ul>
+
+<h2>Content</h2>
+<div class="info-box">
+  <p><strong>Card 1 — "Your privacy rights":</strong></p>
+  <p>"You have the right to access, correct, or delete your personal information, and to withdraw consent. In the production implementation, a request form will be available here."</p>
+</div>
+<div class="info-box">
+  <p><strong>Card 2 — "How to submit a request":</strong></p>
+  <ul>
+    <li>Privacy Contact: <span class="placeholder-tag">[PRIVACY CONTACT — TO BE CONFIRMED]</span></li>
+    <li>Grievance Officer: <span class="placeholder-tag">[GRIEVANCE OFFICER — TO BE CONFIRMED]</span></li>
+  </ul>
+</div>
+
+<h2>Version Note</h2>
+<div class="info-box"><p>"This is a pre-launch design prototype. Contact details shown in [BRACKETS] are placeholders. Final privacy request wording and mechanism will be reviewed by Fronthyre's legal advisor before production launch."</p></div>
+
+<!-- 10. CONTACT PAGE -->
+<h1 class="section-title page-break" id="sec10">10. Contact Page (<code>/contact</code>)</h1>
+
+<h2>SEO</h2>
+<table>
+  <tr><th style="width:120px">Field</th><th>Value</th></tr>
+  <tr><td>Title</td><td>Contact — Fronthyre</td></tr>
+  <tr><td>Description</td><td>Get in touch with the Fronthyre team. General, privacy, and buildathon enquiries.</td></tr>
+</table>
+
+<h2>Header</h2>
+<ul>
+  <li><span class="field-label">Title:</span> "Contact"</li>
+  <li><span class="field-label">Description:</span> "Have a question about Fronthyre or the Early Access network? We'd love to hear from you."</li>
+</ul>
+
+<h2>Contact Types</h2>
+<table>
+  <tr><th style="width:180px">Type</th><th>Description</th><th>Contact</th></tr>
+  <tr><td>General Enquiries</td><td>Questions about Fronthyre, the Early Access network, or anything else.</td><td><span class="placeholder-tag">[GENERAL ENQUIRIES — TO BE CONFIRMED]</span></td></tr>
+  <tr><td>Privacy / Data Enquiries</td><td>Requests to access, correct, or delete your personal data, or withdraw consent.</td><td><span class="placeholder-tag">[PRIVACY / DATA ENQUIRIES — TO BE CONFIRMED]</span></td></tr>
+  <tr><td>Buildathon / Event Enquiries</td><td>Questions about the NitroStack buildathon. Registration is handled by NitroStack.</td><td><span class="placeholder-tag">[BUILDATHON / EVENT ENQUIRIES — TO BE CONFIRMED]</span></td></tr>
+</table>
+
+<h2>Prototype Notice</h2>
+<div class="disclaimer-box"><p>"Contact details shown in [BRACKETS] are placeholders. Final contact information will be added once confirmed by Fronthyre. This is a pre-launch prototype."</p></div>
+
+<h2>Quick Links</h2>
+<ul>
+  <li>Join Early Access (&rarr; /early-access)</li>
+  <li>View Buildathon (&rarr; /buildathon)</li>
+  <li>About Fronthyre (&rarr; /about)</li>
+  <li>Privacy Policy (&rarr; /privacy)</li>
+</ul>
+
+<!-- 11. CONFIGURATION & PLACEHOLDERS -->
+<h1 class="section-title page-break" id="sec11">11. Configuration &amp; Placeholders</h1>
+
+<h2>Site Configuration</h2>
+<table>
+  <tr><th style="width:180px">Field</th><th>Value</th></tr>
+  <tr><td>Name</td><td>Fronthyre</td></tr>
+  <tr><td>Product</td><td>Fronthyre Talent Network</td></tr>
+  <tr><td>Tagline</td><td>"Frontend talent. Better opportunities."</td></tr>
+  <tr><td>Status</td><td>PRE-LAUNCH</td></tr>
+  <tr><td>Domain</td><td>fronthyre.com</td></tr>
+  <tr><td>Email</td><td>hello@fronthyre.com</td></tr>
+</table>
+
+<h2>All Placeholder Values (to be confirmed by legal/ops team)</h2>
+<table>
+  <tr><th>Field</th><th>Placeholder</th></tr>
+  <tr><td>General enquiries contact</td><td><span class="placeholder-tag">[GENERAL ENQUIRIES — TO BE CONFIRMED]</span></td></tr>
+  <tr><td>Privacy/data enquiries contact</td><td><span class="placeholder-tag">[PRIVACY / DATA ENQUIRIES — TO BE CONFIRMED]</span></td></tr>
+  <tr><td>Buildathon/event enquiries contact</td><td><span class="placeholder-tag">[BUILDATHON / EVENT ENQUIRIES — TO BE CONFIRMED]</span></td></tr>
+  <tr><td>Legal entity name</td><td><span class="placeholder-tag">[LEGAL ENTITY NAME — TO BE CONFIRMED]</span></td></tr>
+  <tr><td>Privacy contact</td><td><span class="placeholder-tag">[PRIVACY CONTACT — TO BE CONFIRMED]</span></td></tr>
+  <tr><td>Grievance officer</td><td><span class="placeholder-tag">[GRIEVANCE OFFICER — TO BE CONFIRMED]</span></td></tr>
+  <tr><td>Governing law / jurisdiction</td><td><span class="placeholder-tag">[GOVERNING LAW / JURISDICTION — TO BE CONFIRMED BY LEGAL COUNSEL]</span></td></tr>
+  <tr><td>Retention period</td><td><span class="placeholder-tag">[RETENTION PERIOD — TO BE CONFIRMED BY LEGAL ADVISOR]</span></td></tr>
+  <tr><td>Privacy notice version</td><td>DRAFT v0.1</td></tr>
+  <tr><td>Terms version</td><td>DRAFT v0.1</td></tr>
+</table>
+
+<h2>Event Configuration</h2>
+<table>
+  <tr><th style="width:180px">Field</th><th>Value</th></tr>
+  <tr><td>Event name</td><td>MCP to the Moon</td></tr>
+  <tr><td>Brand line</td><td>Fronthyre × NitroStack</td></tr>
+  <tr><td>Dates</td><td>October 10–12, 2026</td></tr>
+  <tr><td>Duration</td><td>3 Days</td></tr>
+  <tr><td>Mode</td><td>Online</td></tr>
+  <tr><td>Registration URL</td><td>https://nitrostack.dev</td></tr>
+  <tr><td>Event status</td><td>Registration Opening Soon</td></tr>
+  <tr><td>NitroStack info</td><td>"Official NitroStack information to be confirmed."</td></tr>
+</table>
+
+<h2>Key External Links</h2>
+<table>
+  <tr><th style="width:200px">Link</th><th>URL</th></tr>
+  <tr><td>LinkedIn community</td><td>https://www.linkedin.com/groups/10447580/</td></tr>
+  <tr><td>NitroStack registration</td><td>https://nitrostack.dev</td></tr>
+</table>
+
+<h2>Disclaimers Summary</h2>
+<p>All pages include one or more of these disclaimers:</p>
+<div class="disclaimer-box"><p>"Final wording subject to legal review."</p></div>
+<div class="disclaimer-box"><p>"Pre-launch design prototype — not a live data collection system."</p></div>
+<div class="disclaimer-box"><p>"Fronthyre does not guarantee employment, interviews, job offers, or placement."</p></div>
+<div class="disclaimer-box"><p>"Joining early access does not guarantee a job, interview, placement, or recruiter contact."</p></div>
+<div class="disclaimer-box"><p>"LinkedIn® is a registered trademark of LinkedIn Corporation and its affiliates. Fronthyre is not affiliated with, sponsored by, or endorsed by LinkedIn Corporation or its affiliates."</p></div>
+<div class="disclaimer-box"><p>"Technology names are referenced only to describe relevant skills, technologies and areas of expertise. Fronthyre is independently operated and is not affiliated with or endorsed by the respective technology owners unless expressly stated."</p></div>
+<div class="disclaimer-box"><p>"Buildathon registration is handled externally by NitroStack. Fronthyre does not collect Buildathon registration information."</p></div>
+<div class="disclaimer-box"><p>"Official event information, eligibility, participation format, judging, prizes, mentors, submission requirements, and other event details are determined by NitroStack."</p></div>
+<div class="disclaimer-box"><p>"Previous-event statistics are provided for historical context and do not represent the October 2026 event."</p></div>
+
+<hr style="margin-top:30px">
+<p style="text-align:center; font-size:9px; color:#94a3b8; margin-top:20px;">End of document. This content review was generated from the source code of the Fronthyre pre-launch prototype.<br>Generated: September 17, 2026</p>
+
+</div>
+
+</body>
+</html>

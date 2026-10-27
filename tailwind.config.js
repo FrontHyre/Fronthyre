@@ -4,40 +4,29 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: [
-          'Inter',
-          'Segoe UI',
-          'system-ui',
-          '-apple-system',
-          'BlinkMacSystemFont',
-          'sans-serif',
-        ],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
-      keyframes: {
-        floatIn: {
-          from: { opacity: '0', transform: 'translateY(20px)' },
-          to: { opacity: '1', transform: 'translateY(0)' },
-        },
-        pulseDot: {
-          '0%': { boxShadow: '0 0 0 0 rgba(63, 191, 127, 0.5)' },
-          '70%': { boxShadow: '0 0 0 10px rgba(63, 191, 127, 0)' },
-          '100%': { boxShadow: '0 0 0 0 rgba(63, 191, 127, 0)' },
-        },
-        gradientShift: {
-          '0%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
-          '100%': { backgroundPosition: '0% 50%' },
-        },
-        shine: {
-          '0%': { transform: 'translateX(-100%)' },
-          '60%, 100%': { transform: 'translateX(100%)' },
+      colors: {
+        fr: {
+          bg: '#0a0a0b',
+          elevated: '#131316',
+          card: '#18181c',
+          border: '#27272a',
+          'border-hover': '#3f3f46',
+          text: '#fafafa',
+          secondary: '#a1a1aa',
+          muted: '#71717a',
+          accent: '#22d3ee',
+          'accent-dim': '#0891b2',
+          success: '#34d399',
+          warning: '#fbbf24',
+          error: '#f87171',
         },
       },
-      animation: {
-        floatIn: 'floatIn 0.9s cubic-bezier(0.22, 1, 0.36, 1)',
-        pulseDot: 'pulseDot 1.8s infinite',
-        gradientShift: 'gradientShift 3s ease infinite',
-        shine: 'shine 2.4s infinite',
+      borderRadius: {
+        '2xl': '1rem',
+        '3xl': '1.5rem',
       },
     },
   },
