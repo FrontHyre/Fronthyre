@@ -1,27 +1,218 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  html,
-  body,
-  #root {
-    min-height: 100vh;
+  :root {
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  --color-bg: #0a0a0b;
+    --color-bg-elevated: #131316;
+    --color-bg-card: #18181c;
+    --color-border: #27272a;
+    --color-border-hover: #3f3f46;
+    --color-text: #fafafa;
+    --color-text-secondary: #a1a1aa;
+    --color-text-muted: #71717a;
+    --color-accent: #22d3ee;
+    --color-accent-dim: #0891b2;
+    --color-accent-glow: rgba(34, 211, 238, 0.15);
+    --color-success: #34d399;
+    --color-warning: #fbbf24;
+    --color-error: #f87171;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
-    @apply m-0 p-0 font-sans text-[#1f2a3a] overflow-x-hidden;
-    background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 40%, #e8f0fb 100%);
-    background-attachment: fixed;
+    font-family: var(--font-sans);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  ::selection {
+    background-color: var(--color-accent-glow);
+    color: var(--color-text);
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-border-hover);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+@layer components {
+  .container-fr {
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #fafafa 0%, #a1a1aa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-accent-gradient {
+    background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .card-fr {
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .card-fr:hover {
+    border-color: var(--color-border-hover);
+    box-shadow: 0 0 0 1px var(--color-border-hover), 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  .glow-fr {
+    box-shadow: 0 0 40px var(--color-accent-glow);
+  transition: box-shadow 0.3s ease;
+  }
+
+  .glow-fr:hover {
+    box-shadow: 0 0 60px rgba(34, 211, 238, 0.25);
+  }
+
+  .grid-pattern {
+    background-image:
+      linear-gradient(to right, rgba(39, 39, 42, 0.5) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(39, 39, 42, 0.5) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .dot-pattern {
+    background-image: radial-gradient(circle, rgba(39, 39, 42, 0.6) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .fade-mask-b {
+    -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+  }
+
+  .fade-mask-radial {
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease forwards;
+  }
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease forwards;
+  }
+  .animate-fade-in-delay-1 { animation: fadeInUp 0.6s ease 0.1s forwards; opacity: 0; }
+  .animate-fade-in-delay-2 { animation: fadeInUp 0.6s ease 0.2s forwards; opacity: 0; }
+  .animate-fade-in-delay-3 { animation: fadeInUp 0.6s ease 0.3s forwards; opacity: 0; }
+  .animate-fade-in-delay-4 { animation: fadeInUp 0.6s ease 0.4s forwards; opacity: 0; }
+  .animate-scale-in {
+    animation: scaleIn 0.3s ease forwards;
+  }
+  .animate-slide-down {
+    animation: slideDown 0.3s ease forwards;
+  }
+  .animate-slide-up {
+    animation: slideUp 0.4s ease forwards;
+  }
+  .animate-pulse-soft {
+    animation: pulseSoft 3s ease-in-out infinite;
+  }
+  .animate-checkmark {
+    animation: checkmark 0.5s ease forwards;
+  }
+  .animate-draw {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: draw 0.6s ease 0.2s forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseSoft {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes checkmark {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
 }
